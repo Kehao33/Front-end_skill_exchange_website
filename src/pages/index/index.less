@@ -1,0 +1,200 @@
+.index-wrap {
+  min-width: 1000px;
+
+  div.index {
+    width: 100%;
+    min-width: 600px;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .present {
+    position: relative;
+    background-image: url("/img/present.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    .intro {
+      position: absolute;
+      text-align: center;
+      min-width: 500px;
+      height: 460px;
+      left: 50%;
+      top: 70%;
+      transform: translate(-50%, -50%);
+      /* 向左移动自己的一半、向上移动自己的一半 */
+
+      .motto {
+        font-size: 40px;
+        font-weight: 700;
+        color: #fafafa;
+        margin-bottom: 28px;
+      }
+
+      .up {
+        font-size: 28px;
+        color: #fafafa;
+        margin-bottom: 28px;
+      }
+
+      .copyright {
+        color: #fafafa;
+      }
+    }
+  }
+
+  .corner {
+    position: relative;
+
+    div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    .fl {
+      background-color: #e3e3e3;
+      width: 50%;
+      text-align: left;
+      padding-top: 10%;
+      padding-left: 6%;
+
+      ul {
+        font-size: 16px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #000;
+
+        span {
+          font-size: 18px;
+          color: rgb(47, 102, 230);
+          font-weight: 700;
+        }
+      }
+
+      p {
+        width: 82%;
+      }
+
+    }
+
+    .fr {
+      width: 50%;
+      overflow: hidden;
+
+      .fr-img {
+        // background-color: #cc5c5c;
+        background-image: url("/img/present4.jpg");
+        background-position: center;
+        background-size: cover;
+
+        animation: scaleFun 5s linear 0s infinite;
+        animation-play-state: running;
+      }
+    }
+  }
+
+  .nutrition {
+    background-color: rgb(56, 56, 45);
+    position: relative;
+
+    .nutri-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fafafa;
+      margin: 26px;
+      text-align: center;
+    }
+
+    ul {
+      width: 100%;
+      height: 60%;
+      display: flex;
+      justify-content: center;
+
+      li {
+        width: 18%;
+        height: 70%;
+        margin: 20px;
+        list-style: none;
+      }
+    }
+
+    .nutr-card {
+      width: 230px;
+      min-width: 148px;
+      height: 312px;
+      border-radius: 10px;
+      background-color: #e3e3e3;
+      text-align: center;
+
+      &:hover {
+        box-shadow: 3px 2px 8px #58a;
+        transform: translateY(2px);
+      }
+
+      .nutr-header-wrap {
+        padding: 20px;
+        height: 60%;
+
+        span {
+          font-weight: 700;
+          color: #58a;
+          font-size: 24px;
+          padding: 8px;
+        }
+
+        p {
+          text-align: center;
+          margin: 30% auto;
+        }
+      }
+
+      .index-line {
+        width: 70%;
+        margin: 16px auto;
+      }
+    }
+  }
+
+}
+
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  height: 4px;
+  width: 4px;
+  border: 0;
+  background: #1890ff;
+  left: 50%;
+  top: 50%;
+  margin: -2px 0 0 -2px;
+  -webkit-transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
+  -o-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+}
+
+
+
+@keyframes scaleFun {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}

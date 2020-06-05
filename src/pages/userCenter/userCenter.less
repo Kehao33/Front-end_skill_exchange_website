@@ -1,0 +1,143 @@
+.user-center {
+  width: 100%;
+  display: flex;
+  // position: relative;
+  padding: 20px 28px 0px;
+
+
+  .left {
+    width: 76%;
+    min-height: 400px;
+    padding: 10px 30px 30px;
+    background-color: #fbfbfb;
+    text-align: left;
+
+    .left-title {
+      font-weight: 600;
+      font-size: 25px;
+      color: #000;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+    }
+
+    .article-class-nav {
+      width: 100%;
+      display: flex;
+      height: 60px;
+      align-items: center;
+      justify-content: space-around;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 20px;
+
+      .art-nav {
+        font-size: 18px;
+        color: #000;
+        font-weight: 500;
+
+        &:hover {
+          cursor: pointer;
+          color: #1890ff;
+        }
+      }
+
+      .active-nav {
+        font-weight: 700;
+        color: #1890ff;
+      }
+
+    }
+
+    .article-class-content {
+      width: 100%;
+      border: 1px solid #eee;
+      overflow: hidden;
+
+
+    }
+  }
+
+  .right {
+    // position: absolute;
+    // top: 10px;
+    // right: 8px;
+    margin-left: 20px;
+    width: 24%;
+    max-height: 400px;
+    padding: 10px 10px 2px;
+    // outline: 6px solid #8A2BE2;
+    // min-height: 432px;
+    // background-color: #fafafa;
+
+    .user-info-item {
+      border-bottom: 1px solid #eee;
+      // min-height: 52px;
+      font-size: 14px;
+    }
+
+    .personal-avatar {
+      display: flex;
+      padding: 8px 0;
+      line-height: normal;
+
+      .nickname-sign {
+        position: relative;
+        margin-left: 6px;
+
+        .nickname {
+          font-size: 16px;
+          font-weight: 600;
+          margin-right: 24px;
+        }
+
+        div {
+          margin-top: 4px;
+        }
+      }
+    }
+
+    .personal-achieve {
+      line-height: normal;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 66px;
+
+      .achieve-item {
+        display: flex;
+        flex-direction: column;
+        font-size: 16px;
+        line-height: 25px;
+        align-items: center;
+
+        .achieve-item-value {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .personal-firm,
+    .personal-contact {
+      line-height: 52px;
+    }
+
+
+    // .personal-skill {
+    //   padding: 10px 0;
+    //   line-height: 28px;
+    // }
+
+    .personal-brief {
+      padding-top: 12px;
+      border: none;
+
+      p {
+        text-indent: 2em;
+      }
+    }
+  }
+
+
+}
