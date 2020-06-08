@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import { Menu, Avatar, Dropdown, Modal, Form, Input } from 'antd'
+import { Menu, Avatar, Dropdown, Modal, Form, Input, Upload } from 'antd'
 import { connect } from 'react-redux'
 import {
   SoundOutlined,
@@ -25,9 +25,12 @@ class Header extends Component {
     super(props)
     this.onFinish = this.onFinish.bind(this)
     this.loginOut = this.loginOut.bind(this)
+    this.showModAvaModal = this.showModAvaModal.bind(this)
+    this.hidModAvaModal = this.hidModAvaModal.bind(this)
     this.formRef = React.createRef()
     this.state = {
       visible: false,
+      modV: false,
     }
   }
 
@@ -37,6 +40,12 @@ class Header extends Component {
     this.props.history.replace('/login')
   }
 
+  showModAvaModal() {
+    this.setState({ modV: true })
+  }
+  hidModAvaModal() {
+    this.setState({ modV: false })
+  }
   showModal = () => {
     this.setState({
       visible: true,
@@ -91,6 +100,9 @@ class Header extends Component {
         </Menu.Item>
         <Menu.Item>
           <span onClick={this.showModal}>修改基本信息</span>
+        </Menu.Item>
+        <Menu.Item>
+          <span onClick={this.showModAvaModal}>修改头像</span>
         </Menu.Item>
       </Menu>
     )
@@ -195,11 +207,38 @@ class Header extends Component {
           ) : null}
         </div>
         {headerRight}
+
+        <Modal
+          visible={this.state.modV}
+          title="修改头像"
+          cancelText="取消"
+          okText="确定修改"
+          onOk={this.hidModAvaModal}
+          onCancel={this.hidModAvaModal}
+        >
+          <Form>
+            <Form.Item
+              style={{ display: 'none' }}
+              name="userEmail"
+              label="邮箱"
+              rules={[
+                {
+                  type: 'email',
+                  required: true,
+                },
+              ]}
+            >
+              {/* 完成稿上传图片修改头像 */}
+              <Upload />
+            </Form.Item>
+          </Form>
+        </Modal>
+
         <Modal
           visible={this.state.visible}
-          title="修改基本信息"
           bodyStyle={{ paddingRight: 25 }}
           centered
+          title="修改基本信息"
           cancelText="取消"
           okText="确定修改"
           onOk={this.handleOk}
@@ -302,7 +341,7 @@ class Header extends Component {
         </Modal>
       </div>
     )
-    return head
+    return <header>{head}</header>
   }
 }
 

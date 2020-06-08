@@ -84,6 +84,10 @@ export async function reqDeleteArt(reqData, method = 'POST') {
 export async function reqModifyUser(reqData, method = 'POST') {
   return $http('/user/modify', reqData, method)
 }
+// 实现点赞
+export async function reqHitLike(reqData, method = 'POST') {
+  return $http('/user/hit-like', reqData, method)
+}
 
 // ******************* 用户中心 请求模块 END *****************
 
@@ -94,7 +98,6 @@ export async function reqCommentArt(url, reqData = {}, method = 'GET') {
 }
 // 请求文章的评论
 export async function reqCommentData(url, reqData = {}, method = 'GET') {
-  console.log('reqData: ', reqData, 'method: ', method)
   return $http(url, reqData, method)
 }
 

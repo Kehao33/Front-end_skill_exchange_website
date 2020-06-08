@@ -3,6 +3,15 @@
   background-color: #fafafa;
   padding-top: 10px;
 
+  .ant-skeleton {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .ant-empty-image {
+    margin-left: 32px;
+  }
+
   .container {
     width: 80%;
     margin: 0 auto;
@@ -16,6 +25,29 @@
       font-size: 20px;
       margin-bottom: 8px;
     }
+
+    .article-info {
+      overflow: hidden;
+
+      .article-fl {
+        // 解决ie6以为浮动产生双边距问题
+        float: left;
+      }
+
+      .article-fr {
+        float: right;
+
+        .mr {
+          margin-right: 8px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+
 
     p {
       text-indent: 2em;

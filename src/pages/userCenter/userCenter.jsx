@@ -10,7 +10,6 @@ import {
   Upload,
 } from 'antd'
 import { connect } from 'react-redux'
-import reqwest from 'reqwest'
 
 import { SmileTwoTone, PlusOutlined } from '@ant-design/icons'
 import './userCenter.less'

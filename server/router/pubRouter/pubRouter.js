@@ -10,6 +10,7 @@ const { awaitWrap } = require('./../../tools')
 const { userModel } = require('../../model/user')
 const { artModel } = require('../../model/article')
 const { commentModel } = require('../../model/comment')
+const { likeModel } = require('../../model/like')
 
 // 用户注册处理路由
 pubRouter.post('/register', function (req, res) {
@@ -132,21 +133,32 @@ pubRouter.get('/carousel-article', async function (req, res) {
     .json({ data: carArt, msg: '请求推荐文章成功', isOk: 1 })
 })
 
-// 用来展示文章的页面 article.jsx
+// 根据文章的id展示文章的页面 article.jsx
 pubRouter.get('/show-article', async function (req, res) {
   const { id } = req.query
+  const [updateErr, updateArt] = await awaitWrap(
+    artModel.updateOne(
+      { _id: id },
+      {
+        $inc: { readNumber: 1 },
+      }
+    )
+  )
   const [artErr, showArt] = await awaitWrap(
     artModel.findById(id).populate('author')
+  )
+  const [likeErr, likeStatus] = await awaitWrap(
+    likeModel.findOne({ articleId: id })
   )
   const [cntErr, comments] = await awaitWrap(
     commentModel.find({ articleId: id }).populate('authorId')
   )
-  if (artErr || cntErr) {
+  if (artErr || cntErr || updateErr) {
     return res.status(200).json({ data: [], msg: '获取文章信息失败', isOk: 0 })
   } else {
     return res
       .status(200)
-      .json({ showArt, comments, msg: '请求文章信息成功', isOk: 1 })
+      .json({ showArt, likeStatus, comments, msg: '请求文章信息成功', isOk: 1 })
   }
 })
 // ************* 前端动态页面路由 END ************

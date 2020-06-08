@@ -16,7 +16,7 @@ const commentSchema = {
   },
   content: {
     type: String,
-  },
+  }
 }
 
 // 创建评论集合

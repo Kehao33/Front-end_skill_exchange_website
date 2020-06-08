@@ -10,20 +10,9 @@ const { awaitWrap } = require('./../../tools')
 const { userModel } = require('../../model/user')
 const { artModel } = require('../../model/article')
 const { commentModel } = require('../../model/comment')
+const { likeModel } = require('./../../model/like')
 
 // 实现头像上传功能
-const upload = require('jquery-file-upload-middleware')
-upload.configure({
-  uploadDir: path.join(__dirname, './../../../public/uploads/avatars'),
-  uploadUrl: '/change-avatar',
-  imageVersions: {
-    thumbnail: {
-      width: 80,
-      height: 80,
-    },
-  },
-})
-
 uRouter.get('/logout', function (req, res) {
   //退出就是清除登录状态
   req.session.userObj = null
@@ -215,7 +204,7 @@ uRouter.post('/change-avatar', async function (req, res) {
     // )
     // const [upErr, upRes] = await awaitWrap(
     //   userModel.updateOne(
-    //     { _id: fields.uid }, 
+    //     { _id: fields.uid },
     //     { avatarUrl: files.avatarInfo[0].path.split('public')[1] }
     //   )
     // )
@@ -229,13 +218,80 @@ uRouter.post('/change-avatar', async function (req, res) {
   })
 })
 
-// 给文章做评论操作
+// 给文章做评论操作,并且修改文章的评论数量
 uRouter.post('/commentArt', async function (req, res) {
+  const { articleId } = req.body
   const [err, result] = await awaitWrap(commentModel.create(req.body))
-  if (err) {
+  const [upErr, upRes] = await awaitWrap(
+    artModel.updateOne(
+      {
+        _id: articleId,
+      },
+      {
+        commentNumber: await commentModel.countDocuments({
+          articleId: articleId,
+        }),
+      }
+    )
+  )
+  if (err || upErr) {
     return res.status(200).json({ data: [], msg: '评论文章失败', isOk: 0 })
   } else {
     return res.status(200).json({ data: [], msg: '评论文章成功', isOk: 1 })
+  }
+})
+
+// add it before first git commit
+// 根据文章点赞实现文章点赞数的修改
+uRouter.post('/hit-like', async function (req, res) {
+  const { authorId, articleId } = req.body
+  const [findErr, findRes] = await awaitWrap(
+    likeModel.find({ authorId, articleId })
+  )
+  // 如果没有找到这个评论记录，那么就创建一个评论，并更新文章集合中的点赞数量+1
+  if (!findRes.length) {
+    const [err, result] = await awaitWrap(
+      likeModel.create({ ...req.body, isLike: 1 })
+    )
+
+    const [upErr, upRes] = await awaitWrap(
+      artModel.updateOne({ _id: articleId }, { $inc: { likeNumber: 1 } })
+    )
+
+    if (findErr || err || upErr) {
+      return res.status(200).json({ data: [], msg: '请刷新页面', isOk: 0 })
+    } else {
+      const showArt = await artModel.findOne({ _id: articleId })
+      const comments = await commentModel
+        .find({ articleId: articleId })
+        .populate('authorId')
+      return res.status(200).json({
+        data: { isLike: result.isLike, showArt, comments },
+        msg: '点赞成功',
+        isOk: 1,
+      })
+    }
+  } else {
+    // 如果有点赞记录，则删除点赞记录，使文章集合的点赞数-1
+
+    const [err, result] = await awaitWrap(likeModel.deleteOne(req.body))
+    const [upErr, upRes] = await awaitWrap(
+      artModel.updateOne({ _id: articleId }, { $inc: { likeNumber: -1 } })
+    )
+
+    if (findErr || err || upErr) {
+      return res.status(200).json({ data: [], msg: '操作有误', isOk: 0 })
+    } else {
+      const comments = await commentModel
+        .find({ articleId })
+        .populate('authorId')
+      const showArt = await artModel.findOne({ _id: articleId })
+      return res.status(200).json({
+        data: { isLike: 0, showArt, comments }, //表示取消点赞成功
+        msg: '取消点赞成功',
+        isOk: 1,
+      })
+    }
   }
 })
 

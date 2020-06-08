@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import {ConfigProvider} from 'antd'
+import zhCN from 'antd/es/locale/zh_CN';
 import { HashRouter, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
@@ -20,10 +22,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <HashRouter>
-      <Route path={`/`} component={App}></Route>
-    </HashRouter>
-    {/* <App/> */}
+    <ConfigProvider  locale={zhCN}>
+      <HashRouter>
+        <Route path={`/`} component={App}></Route>
+      </HashRouter>
+    </ConfigProvider>
   </Provider>,
   document.getElementById('root')
 )
