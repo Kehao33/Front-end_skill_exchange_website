@@ -4,6 +4,7 @@ const express = require('express')
 // 公共路由
 const pubRouter = express.Router()
 const md5 = require('blueimp-md5')
+const svgCaptcha = require('svg-captcha') //引入验证码依赖
 const secretKey = 'JakeQu_font31218'
 
 const { awaitWrap } = require('./../../tools')
@@ -12,9 +13,32 @@ const { artModel } = require('../../model/article')
 const { commentModel } = require('../../model/comment')
 const { likeModel } = require('../../model/like')
 
+// 验证码配置
+const codeConfig = {
+  size: 4, // 验证码长度
+  ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+  noise: 3, // 干扰线条的数量
+  height: 38,
+  width: 108,
+  color: '#ff3300',
+  background: '#fafafa',
+  fontSize: 35,
+}
+
+pubRouter.get('/captcha', function (req, res) {
+  const capTools = svgCaptcha.create(codeConfig)
+  req.session.rightCaptcha = capTools.text.toLowerCase()
+  console.log('captcha text: ', capTools.text)
+  res.type('svg')
+  res.status(200).send(capTools.data)
+})
+
 // 用户注册处理路由
 pubRouter.post('/register', function (req, res) {
-  const { nickName, userEmail, userPwd, confirmPwd } = req.body
+  const { nickName, userEmail, captcha, userPwd, confirmPwd } = req.body
+  if (captcha.toLowerCase() !== req.session.rightCaptcha) {
+    return res.status(200).json({ msg: '验证码有误，请重新输入!', isOk: 0 })
+  }
   userModel.findOne({ userEmail }, function (err, doc) {
     if (userPwd !== confirmPwd || !userEmail) {
       // 400Bad Request客户端请求的语法错误

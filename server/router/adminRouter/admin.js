@@ -45,7 +45,7 @@ adminRouter.post('/delete-byuid', async function (req, res) {
 adminRouter.post('/adduser', async function (req, res) {
   const { userEmail, userPwd, nickName, userRole, state, confirmPwd } = req.body
   const isEqual = userPwd === confirmPwd
-  console.log('adduser: ', req.body)
+
   const [findErr, hasUser] = await awaitWrap(userModel.findOne({ userEmail }))
   if (findErr || !isEqual) {
     return res.status(200).json({ data: [], msg: '添加用户失败', isOk: 0 })
@@ -63,7 +63,6 @@ adminRouter.post('/adduser', async function (req, res) {
       })
     )
     if (createErr) {
-      console.log('createErr: ', createErr)
       return res.status(200).json({ data: [], msg: '添加用户失败', isOk: 0 })
     } else
       return res
@@ -77,7 +76,6 @@ adminRouter.post('/modify-user', async function (req, res) {
     userModel.updateOne({ _id: uid }, req.body)
   )
   if (err) {
-    console.log('modify Error:', err)
     return res.status(200).json({ data: [], msg: '修改用户失败', isOk: 0 })
   } else {
     return res
@@ -85,6 +83,5 @@ adminRouter.post('/modify-user', async function (req, res) {
       .json({ data: result, msg: '修改用户数据成功', isOk: 1 })
   }
 })
-
 
 module.exports = adminRouter

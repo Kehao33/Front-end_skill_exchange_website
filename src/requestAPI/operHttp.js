@@ -39,6 +39,10 @@ export async function reqArtByUid(reqData, method = 'GET') {
   return $http('/user/artinfo', reqData, method)
 }
 
+// 用户注册时获取验证码captcha
+export async function reqGetCaptcha(reqData = {}, method = 'GET') {
+  return $http('/public/captcha', reqData, method)
+}
 // 用户注册
 export async function reqRegister(reqData = {}, method = 'POST') {
   return $http('/public/register', reqData, method)

@@ -1,21 +1,40 @@
-import React, { Component } from 'react'
-import { Form, Input, Card, Button } from 'antd'
+import React, { Component, createRef } from 'react'
+import { Form, Input, Card, Button, Row, Col, message } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
-import { Redirect } from 'react-router-dom'
 // 获取register中的register方法
+import { Redirect } from 'react-router-dom'
 import { register } from '../../redux/user.redux.js'
 import { connect } from 'react-redux'
+import { reqGetCaptcha } from './../../requestAPI/operHttp'
 import Footer from './../../components/footer/footer.jsx'
 import './register.less'
 
 @connect((state) => state.user, { register })
 class Register extends Component {
-  // 表单提交的时候自动触发的事件，values是表单内容对象
-  onFinish = (formData) => {
-    this.props.register(formData)
-    this.props.history.replace('/login')
+  constructor(props) {
+    super(props)
+    this.captchaRef = createRef()
+    this.state = { captchaImg: '' }
   }
 
+  // 表单提交的时候自动触发的事件，values是表单内容对象
+  onFinish = (formData) => {
+    const { history, register, isAuth } = this.props
+    console.log('formData:', formData)
+    register(formData)
+    if (isAuth) {
+      history.replace('/login')
+    }
+  }
+
+  // this.refs.captchaRef.current.src = `http://localhost:3000/public/captcha`
+
+  getCaptcha = async () => {
+    await reqGetCaptcha({ time: Date.now() })
+    this.setState({ captchaImg: Date.now() })
+    console.log(this.captchaRef)
+    this.captchaRef.current.src = `http://localhost:3000/public/captcha`
+  }
   render() {
     const formItemLayout = {
       labelCol: {
@@ -47,8 +66,10 @@ class Register extends Component {
         },
       },
     }
-
-    let { redirectTo } = this.props // 从redux中获取的，用来判断当前页面应该跳转到哪里
+    const { isAuth, redirectTo, history } = this.props
+    if (isAuth && redirectTo === '/login') {
+      return <Redirect to="/login" />
+    }
 
     const regCom = (
       <>
@@ -75,7 +96,7 @@ class Register extends Component {
                 },
               ]}
             >
-              <Input className="register-input" />
+              <Input size="large" className="register-input" />
             </Form.Item>
 
             <Form.Item
@@ -92,7 +113,7 @@ class Register extends Component {
                 },
               ]}
             >
-              <Input className="register-input" />
+              <Input size="large" className="register-input" />
             </Form.Item>
 
             <Form.Item
@@ -106,7 +127,7 @@ class Register extends Component {
               ]}
               hasFeedback
             >
-              <Input.Password className="register-input" />
+              <Input.Password size="large" className="register-input" />
             </Form.Item>
 
             <Form.Item
@@ -130,7 +151,34 @@ class Register extends Component {
                 }),
               ]}
             >
-              <Input.Password className="register-input" />
+              <Input.Password size="large" className="register-input" />
+            </Form.Item>
+            <Form.Item label="注册校验">
+              <Row gutter={3}>
+                <Col span={20}>
+                  <Form.Item
+                    name="captcha"
+                    noStyle
+                    rules={[
+                      {
+                        required: true,
+                        message: '请输入正确的验证码!',
+                      },
+                    ]}
+                  >
+                    <Input size="large" placeholder="点击图片可刷新验证码" />
+                  </Form.Item>
+                </Col>
+                <Col span={1}>
+                  <img
+                    ref={this.captchaRef}
+                    className="captcha-img"
+                    onClick={this.getCaptcha}
+                    src={`http://localhost:3000/public/captcha`}
+                    alt="验证码照片"
+                  />
+                </Col>
+              </Row>
             </Form.Item>
 
             {/* <Form.Item label="邮箱验证">

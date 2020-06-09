@@ -21,6 +21,7 @@ let isRegisterOrLogout = false
 const initState = {
   redirectTo: '',
   userObj: operUser.getUser(),
+  errBroadcast: '', //错误消息广播
 }
 
 export function user(state = initState, action) {
@@ -44,7 +45,7 @@ export function user(state = initState, action) {
     case MODIFY_USERPASS:
       return { ...state, ...action.payload }
     case ERROR_MSG:
-      return { ...state, isAuth: false, msg: action.msg }
+      return { ...state, isAuth: false, errBroadcast: action.msg }
     default:
       return { ...state }
   }
@@ -78,7 +79,6 @@ export function register(userObj) {
   }
   return async (dispatch) => {
     const { data } = await reqRegister(userObj)
-    // const res = await axios.post('/pubic/register', userObj)
     if (data.isOk) {
       // 如果后台操作成功，则派发一个action
       userRole = ''
@@ -86,13 +86,13 @@ export function register(userObj) {
       message.success('注册成功, 跳转到登录页面...')
       dispatch(
         registerSuccess({
+          isAuth: true,
           redirectTo: getRedirectPath(userRole, isRegisterOrLogout),
         })
       )
     } else {
-      userRole = ''
-      dispatch(errorMsg(data.msg))
       message.error(data.msg)
+      dispatch(errorMsg(data.msg))
     }
   }
 }
