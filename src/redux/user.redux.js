@@ -3,22 +3,23 @@ import operUser, { getRedirectPath } from '../tools'
 import {
   reqRegister,
   reqLogin,
-  reqModifyUser,
+  reqModifyUpass,
   reqLogOut,
+  reqUpdateUserInfo,
 } from './../requestAPI/operHttp'
 
 // action
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS' //登录成功
 const USER_MODIFY = 'USER_MODIFY' //用户中心 完善信息
-const MODIFY_USER = 'MODIFY_USER'
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS' // 注册成功
 const USER_LOGOUT = 'USER_LOGOUT' //用户退出
 const ERROR_MSG = 'ERROR_MSG' //错误处理
+const MODIFY_USERPASS = 'MODIFY_USERPASS' // 修改用户密码成功
 let userRole = '' // 根据用户角色来实现注册成功和登录成功的页面跳转
 let isRegisterOrLogout = false
 
 const initState = {
-  redirectTo: operUser.getUser(),
+  redirectTo: '',
   userObj: operUser.getUser(),
 }
 
@@ -40,7 +41,7 @@ export function user(state = initState, action) {
     // 用户完善信息，如果是头部的userObj和userCenter页面的相同，那就同步该更新数据
     case USER_MODIFY:
       return { ...state, ...action.payload }
-    case MODIFY_USER:
+    case MODIFY_USERPASS:
       return { ...state, ...action.payload }
     case ERROR_MSG:
       return { ...state, isAuth: false, msg: action.msg }
@@ -50,11 +51,14 @@ export function user(state = initState, action) {
 }
 
 function userModify(obj) {
-  return { type: MODIFY_USER, payload: obj }
+  return { type: USER_MODIFY, payload: obj }
+}
+function userModPass(obj) {
+  return { type: MODIFY_USERPASS, payload: obj }
 }
 
 function errorMsg(msg) {
-  return { msg, type: ERROR_MSG }
+  return { type: ERROR_MSG, msg }
 }
 //  action creater
 function registerSuccess(obj) {
@@ -104,7 +108,6 @@ export function login(userObj) {
     const { data } = await reqLogin(userObj)
     if (data.isOk) {
       const { loginUser, msg } = data
-
       message.success(msg)
       operUser.saveUser(loginUser)
       dispatch(
@@ -138,30 +141,33 @@ export function logOutUser() {
 }
 
 // 用户于用户中心完善用户信息
-// export function uModifyInfo(modifyInfo) {
-//   return async (dispatch) => {
-//     const { data } = await reqUpdateUserInfo(
-//       '/user/update-userinfo',
-//       modifyInfo,
-//       'POST'
-//     )
-
-//     if (data.isOk) {
-//       message.success(data.msg)
-//       dispatch(userModify(data.data))
-//     } else message.error(data.msg)
-//   }
-// }
-
-export function modifyUserObj(reqData) {
+export function uModifyInfo(modifyForm) {
   return async (dispatch) => {
-    const { data } = await reqModifyUser(reqData, 'POST')
+    const { data } = await reqUpdateUserInfo(modifyForm)
+    const loginUser = data.data
+
+    if (data.isOk) {
+      operUser.saveUser(loginUser)
+      dispatch(
+        userModify({
+          redirectTo: getRedirectPath(loginUser, false),
+          userObj: loginUser,
+        })
+      )
+      message.success(data.msg)
+    } else message.error(data.msg)
+  }
+}
+
+export function modifyUserPass(reqData) {
+  return async (dispatch) => {
+    const { data } = await reqModifyUpass(reqData, 'POST')
     operUser.removeUser()
     if (data.isOk) {
       message.success(data.msg)
     } else {
       message.warning(data.msg)
     }
-    dispatch(userModify({ redirectTo: '/login', userObj: null }))
+    dispatch(userModPass({ redirectTo: '/login', userObj: null }))
   }
 }

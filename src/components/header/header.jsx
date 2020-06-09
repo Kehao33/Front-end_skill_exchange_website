@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-import { Menu, Avatar, Dropdown, Modal, Form, Input, Upload } from 'antd'
+import { Menu, Avatar, Dropdown, Modal, Form, Input } from 'antd'
 import { connect } from 'react-redux'
 import {
   SoundOutlined,
@@ -13,7 +13,7 @@ import {
   ClusterOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons'
-import { logOutUser, modifyUserObj } from './../../redux/user.redux.js'
+import { logOutUser, modifyUserPass } from './../../redux/user.redux.js'
 
 import './header.less'
 const { confirm } = Modal
@@ -25,27 +25,18 @@ class Header extends Component {
     super(props)
     this.onFinish = this.onFinish.bind(this)
     this.loginOut = this.loginOut.bind(this)
-    this.showModAvaModal = this.showModAvaModal.bind(this)
-    this.hidModAvaModal = this.hidModAvaModal.bind(this)
     this.formRef = React.createRef()
     this.state = {
       visible: false,
-      modV: false,
     }
   }
 
   // 用户修改基本信息提交操作调用
   onFinish(formData) {
-    this.props.modifyUserObj(formData)
+    this.props.modifyUserPass(formData)
     this.props.history.replace('/login')
   }
 
-  showModAvaModal() {
-    this.setState({ modV: true })
-  }
-  hidModAvaModal() {
-    this.setState({ modV: false })
-  }
   showModal = () => {
     this.setState({
       visible: true,
@@ -99,10 +90,7 @@ class Header extends Component {
           </span>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={this.showModal}>修改基本信息</span>
-        </Menu.Item>
-        <Menu.Item>
-          <span onClick={this.showModAvaModal}>修改头像</span>
+          <span onClick={this.showModal}>快速修改密码</span>
         </Menu.Item>
       </Menu>
     )
@@ -132,9 +120,9 @@ class Header extends Component {
           {userObj && userObj.avatarUrl ? (
             <Avatar src={userObj.avatarUrl} />
           ) : (
-            <Avatar style={{ backgroundColor: '#87d068' }}>U</Avatar>
+            <Avatar>U</Avatar>
           )}
-          &nbsp;&nbsp;
+          &nbsp;
           <Dropdown overlay={menu}>
             <span
               className="ant-dropdown-link"
@@ -209,32 +197,6 @@ class Header extends Component {
         {headerRight}
 
         <Modal
-          visible={this.state.modV}
-          title="修改头像"
-          cancelText="取消"
-          okText="确定修改"
-          onOk={this.hidModAvaModal}
-          onCancel={this.hidModAvaModal}
-        >
-          <Form>
-            <Form.Item
-              style={{ display: 'none' }}
-              name="userEmail"
-              label="邮箱"
-              rules={[
-                {
-                  type: 'email',
-                  required: true,
-                },
-              ]}
-            >
-              {/* 完成稿上传图片修改头像 */}
-              <Upload />
-            </Form.Item>
-          </Form>
-        </Modal>
-
-        <Modal
           visible={this.state.visible}
           bodyStyle={{ paddingRight: 25 }}
           centered
@@ -273,17 +235,7 @@ class Header extends Component {
             >
               <Input disabled={true} />
             </Form.Item>
-            <Form.Item
-              name="nickName"
-              label="用户名"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+
             <Form.Item
               name="oldPwd"
               label="旧密码"
@@ -345,6 +297,6 @@ class Header extends Component {
   }
 }
 
-export default connect((state) => state.user, { logOutUser, modifyUserObj })(
+export default connect((state) => state.user, { logOutUser, modifyUserPass })(
   withRouter(Header)
 )

@@ -25,14 +25,13 @@ uRouter.get('/logout', function (req, res) {
 
 // ********************* 用户中心 userCenter操作 START ************
 // 修改用户的 昵称，密码路由
-uRouter.post('/modify', async function (req, res) {
-  const { userEmail, nickName, oldPwd, userPwd, confirmPwd } = req.body
+uRouter.post('/modify-pass', async function (req, res) {
+  const { userEmail, oldPwd, userPwd, confirmPwd } = req.body
   let doc = await userModel.findOne({ userEmail })
 
   if (
     !doc ||
     userPwd !== confirmPwd ||
-    nickName.trim().length < 1 ||
     md5(oldPwd, secretKey) !== doc.userPwd
   ) {
     // 400Bad Request客户端请求的语法错误
@@ -42,7 +41,7 @@ uRouter.post('/modify', async function (req, res) {
   } else {
     await userModel.updateOne(
       { userEmail },
-      { nickName, userPwd: md5(userPwd, secretKey) }
+      { userPwd: md5(userPwd, secretKey) }
     )
 
     return res
@@ -120,16 +119,17 @@ uRouter.post('/update-userinfo', async function (req, res) {
   if (err) {
     return res.status(200).json({ data: [], msg: '完善个人信息失败', isOk: 0 })
   } else {
-    if (findErr)
+    if (findErr) {
       return res
         .status(200)
         .json({ data: [], msg: '服务器繁忙，请稍后操作', isOk: false })
-    else {
+    } else {
       const loginUser = {
         _id: findRes._id,
         nickName: findRes.nickName,
         userEmail: findRes.userEmail,
         userRole: findRes.userRole,
+        avatarUrl: findRes.avatarUrl,
       }
       return res
         .status(200)
@@ -188,7 +188,6 @@ uRouter.post('/write', async function (req, res) {
 
 // 修改用户的头像
 uRouter.post('/change-avatar', async function (req, res) {
-  console.log('req.body', req.body)
   const form = formidable({
     keepExtensions: true,
     multiples: true,
@@ -196,25 +195,17 @@ uRouter.post('/change-avatar', async function (req, res) {
   })
 
   form.parse(req, async (err, fields, files) => {
-    console.log('fields:', fields)
-    console.log('files :', files)
-    // console.log(
-    //   'files.avatarInfo.path.split(public)[1] :',
-    //   files.avatarInfo[0].path.split('public')[1]
-    // )
-    // const [upErr, upRes] = await awaitWrap(
-    //   userModel.updateOne(
-    //     { _id: fields.uid },
-    //     { avatarUrl: files.avatarInfo[0].path.split('public')[1] }
-    //   )
-    // )
-    // if (upErr) {
-    //   console.log('err',upErr)
-    //   return res.status(200).json({ data: [], msg: '修改头像失败', isOk: 0 })
-    // } else {
-    //   console.log('更新成功')
-    //   return res.status(200).json({ data: [], msg: '修改头像成功', isOk: 1 })
-    // }
+    const [upErr, upRes] = await awaitWrap(
+      userModel.updateOne(
+        { _id: fields.uid },
+        { avatarUrl: files.avatar.path.split('public')[1] }
+      )
+    )
+    if (upErr) {
+      return res.status(200).json({ data: [], msg: '修改头像失败', isOk: 0 })
+    } else {
+      return res.status(200).json({ data: [], msg: '修改头像成功', isOk: 1 })
+    }
   })
 })
 

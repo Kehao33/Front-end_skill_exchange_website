@@ -166,7 +166,11 @@ class AlgoRightCon extends Component {
                       href={`#/user/${item._id && item.author._id}`}
                       className="u-center"
                     >
-                      <Avatar src="/img/a3.jpg" />
+                      {item && item.author.avatarUrl ? (
+                        <Avatar src={item.author.avatarUrl} />
+                      ) : (
+                        <Avatar>U</Avatar>
+                      )}
                       &nbsp;&nbsp;{item._id && item.author.nickName}
                     </a>,
                     <IconText

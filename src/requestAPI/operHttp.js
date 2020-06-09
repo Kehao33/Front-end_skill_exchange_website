@@ -52,8 +52,8 @@ export async function reqUserByUid(reqData, method = 'GET') {
   return $http('/user/uinfo', reqData, method)
 }
 
-export async function reqUpdateUserInfo(reqData) {
-  return $http('/user/update-userinfo', reqData, 'POST')
+export async function reqUpdateUserInfo(reqData, method = 'POST') {
+  return $http('/user/update-userinfo', reqData, method)
 }
 // 修改用户头像
 export async function reqModAvatar(reqData, method = 'POST') {
@@ -81,8 +81,8 @@ export async function reqDeleteArt(reqData, method = 'POST') {
   return $http('/user/deleteArt', reqData, method)
 }
 // 修改用户的基本信息
-export async function reqModifyUser(reqData, method = 'POST') {
-  return $http('/user/modify', reqData, method)
+export async function reqModifyUpass(reqData, method = 'POST') {
+  return $http('/user/modify-pass', reqData, method)
 }
 // 实现点赞
 export async function reqHitLike(reqData, method = 'POST') {

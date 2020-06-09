@@ -174,7 +174,11 @@ class Dynamic extends Component {
                         href={`#/user/${item.author._id}`}
                         className="u-center"
                       >
-                        <Avatar src="/img/a3.jpg" />
+                        {item && item.author.avatarUrl ? (
+                          <Avatar src={item.author.avatarUrl} />
+                        ) : (
+                          <Avatar>U</Avatar>
+                        )}
                         &nbsp;&nbsp;{item && item.author.nickName}
                       </a>,
                       <IconText
@@ -253,7 +257,11 @@ class Dynamic extends Component {
                             href={`#/user/${item.author._id}`}
                             className="u-center"
                           >
-                            <Avatar src="/img/a3.jpg" />
+                            {item && item.author.avatarUrl ? (
+                              <Avatar src={item.author.avatarUrl} />
+                            ) : (
+                              <Avatar>U</Avatar>
+                            )}
                             &nbsp;&nbsp;{item.author.nickName}
                           </a>,
                           <IconText

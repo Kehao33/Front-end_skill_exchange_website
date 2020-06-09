@@ -78,6 +78,7 @@ pubRouter.post('/login', function (req, res) {
             nickName: doc.nickName,
             userEmail: doc.userEmail,
             userRole: doc.userRole,
+            avatarUrl: doc.avatarUrl,
           },
         })
       } else {

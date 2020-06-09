@@ -38,6 +38,8 @@ class Index extends Component {
                       style={{
                         width: '86px',
                         height: '36px',
+                        minWidth: 86,
+                        minHeight: 36,
                         marginBottom: 148,
                       }}
                     >

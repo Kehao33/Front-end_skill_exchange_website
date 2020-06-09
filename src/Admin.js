@@ -24,7 +24,7 @@ import { connect } from 'react-redux'
 
 import { reqLogOut } from './requestAPI/operHttp'
 
-import { logOutUser, modifyUserObj } from './redux/user.redux'
+import { logOutUser, modifyUserPass } from './redux/user.redux'
 import './admin.less'
 const { Header, Content, Sider } = Layout
 const { confirm } = Modal
@@ -43,7 +43,7 @@ class Admin extends Component {
   }
 
   onFinish(formData) {
-    this.props.modifyUserObj(formData)
+    this.props.modifyUserPass(formData)
     this.props.history.replace('/login')
   }
 
@@ -167,10 +167,7 @@ class Admin extends Component {
           <div className="logo">
             <img src="/img/logo.png" alt="" />
           </div>
-          <Menu
-            theme="dark"
-            mode="inline"
-          >
+          <Menu theme="dark" mode="inline">
             <Menu.Item
               key="1"
               className={
@@ -337,6 +334,6 @@ class Admin extends Component {
   }
 }
 
-export default connect((state) => state.user, { logOutUser, modifyUserObj })(
+export default connect((state) => state.user, { logOutUser, modifyUserPass })(
   withRouter(Admin)
 )

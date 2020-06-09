@@ -42,7 +42,7 @@ function RightContent(props) {
         message.warning('资源不存在')
       }
     }
-    
+
     searchData.clear()
     setIsSearch(false)
 
@@ -60,7 +60,11 @@ function RightContent(props) {
           <div className="res-content-header">
             <Row justify="start">
               <Col span={2}>
-                <Avatar size="large" src="/img/a3.jpg" />
+                {item && item.author.avatarUrl ? (
+                  <Avatar src={item.author.avatarUrl} />
+                ) : (
+                  <Avatar>U</Avatar>
+                )}
               </Col>
               <Col span={12} style={{ textAlign: 'left', marginLeft: 24 }}>
                 <span className="share-detail">

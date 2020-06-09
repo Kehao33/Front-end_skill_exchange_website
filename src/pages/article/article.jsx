@@ -7,6 +7,7 @@ import {
   List,
   Avatar,
   message,
+  Anchor,
   Divider,
   Modal,
   Skeleton,
@@ -26,7 +27,7 @@ import {
 } from './../../requestAPI/operHttp.js'
 import { formatDate } from './../../tools.js'
 import Footer from './../../components/footer/footer'
-
+const { Link } = Anchor
 const { confirm } = Modal
 const Article = (props) => {
   // cntData: 文章对应的评论数据
@@ -125,6 +126,7 @@ const Article = (props) => {
                   <span> | {artData && formatDate(artData.publishDate)}</span>
                 </div>
                 {/* 展示文章的阅读数，点赞，评论数量 */}
+
                 <div className="article-fr">
                   <span className="mr">
                     <EyeOutlined />
@@ -198,7 +200,11 @@ const Article = (props) => {
                       <List.Item.Meta
                         avatar={
                           <a href={`#/user/${item && item.authorId._id}`}>
-                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                            {item && item.authorId.avatarUrl ? (
+                              <Avatar src={item.authorId.avatarUrl} />
+                            ) : (
+                              <Avatar>U</Avatar>
+                            )}
                           </a>
                         }
                         title={
