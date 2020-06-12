@@ -19,7 +19,7 @@ const codeConfig = {
   ignoreChars: '0o1i', // 验证码字符中排除 0o1i
   noise: 3, // 干扰线条的数量
   height: 38,
-  width: 108,
+  width: 112,
   color: '#ff3300',
   background: '#fafafa',
   fontSize: 35,
@@ -28,11 +28,10 @@ const codeConfig = {
 pubRouter.get('/captcha', function (req, res) {
   const capTools = svgCaptcha.create(codeConfig)
   req.session.rightCaptcha = capTools.text.toLowerCase()
-  console.log('captcha text: ', capTools.text)
+  console.log(capTools.text)
   res.type('svg')
   res.status(200).send(capTools.data)
 })
-
 // 用户注册处理路由
 pubRouter.post('/register', function (req, res) {
   const { nickName, userEmail, captcha, userPwd, confirmPwd } = req.body

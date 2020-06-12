@@ -29,11 +29,13 @@ class Register extends Component {
 
   // this.refs.captchaRef.current.src = `http://localhost:3000/public/captcha`
 
-  getCaptcha = async () => {
-    await reqGetCaptcha({ time: Date.now() })
-    this.setState({ captchaImg: Date.now() })
-    console.log(this.captchaRef)
-    this.captchaRef.current.src = `http://localhost:3000/public/captcha`
+  getCaptcha = () => {
+    const timer = setTimeout(async () => {
+      await reqGetCaptcha({ time: Date.now() })
+      console.log(this.captchaRef)
+      this.captchaRef.current.src = `http://localhost:3000/public/captcha?time=${Date.now()}`
+      clearTimeout(timer)
+    }, 1000)
   }
   render() {
     const formItemLayout = {
@@ -66,7 +68,7 @@ class Register extends Component {
         },
       },
     }
-    const { isAuth, redirectTo, history } = this.props
+    const { isAuth, redirectTo } = this.props
     if (isAuth && redirectTo === '/login') {
       return <Redirect to="/login" />
     }
@@ -78,87 +80,109 @@ class Register extends Component {
           注册表
         </div>
         <Card>
-          <Form
-            {...formItemLayout}
-            name="register"
-            onFinish={this.onFinish}
-            scrollToFirstError
-            size="middle"
-          >
-            <Form.Item
-              name="nickName"
-              label="昵称"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入您的昵称!',
-                  whitespace: true,
-                },
-              ]}
+          <div className="form-wrap">
+            <Form
+              {...formItemLayout}
+              name="register"
+              onFinish={this.onFinish}
+              scrollToFirstError
+              size="large"
             >
-              <Input size="large" className="register-input" />
-            </Form.Item>
+              <Row>
+                <Form.Item
+                  name="nickName"
+                  label="用户昵称"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入您的昵称呀!',
+                      whitespace: true,
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    placeholder="请填写您可爱的昵称哦"
+                    className="register-input"
+                  />
+                </Form.Item>
+              </Row>
+              <Row>
+                <Form.Item
+                  name="userEmail"
+                  label="邮箱账号"
+                  rules={[
+                    {
+                      type: 'email',
+                      message: '请输入正确的邮箱格式!',
+                    },
+                    {
+                      required: true,
+                      message: '请输入您的邮箱号!',
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    placeholder="这也是您的登录账号"
+                    className="register-input"
+                  />
+                </Form.Item>
+              </Row>
+              <Row>
+                <Form.Item
+                  name="userPwd"
+                  label="登录密码"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入您的密码!',
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input.Password
+                    size="large"
+                    placeholder="请填写登录密码"
+                    className="register-input"
+                  />
+                </Form.Item>
+              </Row>
+              <Row>
+                <Form.Item
+                  name="confirmPwd"
+                  label="确定密码"
+                  dependencies={['userPwd']}
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: '请核对您的密码!',
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(rule, value) {
+                        if (!value || getFieldValue('userPwd') === value) {
+                          return Promise.resolve()
+                        }
 
-            <Form.Item
-              name="userEmail"
-              label="邮箱"
-              rules={[
-                {
-                  type: 'email',
-                  message: '请输入正确的邮箱格式!',
-                },
-                {
-                  required: true,
-                  message: '请输入您的邮箱号!',
-                },
-              ]}
-            >
-              <Input size="large" className="register-input" />
-            </Form.Item>
+                        return Promise.reject('请确保两次密码输入一致!')
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password
+                    size="large"
+                    className="register-input"
+                    placeholder="请再次确认登录密码"
+                  />
+                </Form.Item>
+              </Row>
 
-            <Form.Item
-              name="userPwd"
-              label="密码"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入您的密码!',
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password size="large" className="register-input" />
-            </Form.Item>
-
-            <Form.Item
-              name="confirmPwd"
-              label="确定密码"
-              dependencies={['userPwd']}
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: '请核对您的密码!',
-                },
-                ({ getFieldValue }) => ({
-                  validator(rule, value) {
-                    if (!value || getFieldValue('userPwd') === value) {
-                      return Promise.resolve()
-                    }
-
-                    return Promise.reject('请确保两次密码输入一致!')
-                  },
-                }),
-              ]}
-            >
-              <Input.Password size="large" className="register-input" />
-            </Form.Item>
-            <Form.Item label="注册校验">
-              <Row gutter={3}>
-                <Col span={20}>
+              <Row gutter={2}>
+                <Col span={18}>
                   <Form.Item
+                    label="注册校验"
                     name="captcha"
-                    noStyle
                     rules={[
                       {
                         required: true,
@@ -166,22 +190,25 @@ class Register extends Component {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="点击图片可刷新验证码" />
+                    <Input
+                      size="large"
+                      placeholder="点击图片可刷新验证码"
+                    />
                   </Form.Item>
                 </Col>
-                <Col span={1}>
+                <Col span={4}>
                   <img
                     ref={this.captchaRef}
                     className="captcha-img"
+                    style={{ zIndex: 999 }}
                     onClick={this.getCaptcha}
                     src={`http://localhost:3000/public/captcha`}
                     alt="验证码照片"
                   />
                 </Col>
               </Row>
-            </Form.Item>
 
-            {/* <Form.Item label="邮箱验证">
+              {/* <Form.Item label="邮箱验证">
               <Row gutter={8} style={{ marginLeft: -4, marginRight: 16 }}>
                 <Col span={21}>
                   <Form.Item
@@ -206,20 +233,21 @@ class Register extends Component {
               </Row>
             </Form.Item> */}
 
-            <Form.Item {...tailFormItemLayout}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ fontSize: '18px' }}
-                size="large"
-              >
-                立即注册
-              </Button>
-              <div style={{ marginTop: 20 }}>
-                有账号, <a href="#/login">现在就去登录!</a>
-              </div>
-            </Form.Item>
-          </Form>
+              <Form.Item {...tailFormItemLayout}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ fontSize: '18px' }}
+                  size="large"
+                >
+                  立即注册
+                </Button>
+                <div style={{ marginTop: 20 }}>
+                  有账号, <a href="#/login">现在就去登录!</a>
+                </div>
+              </Form.Item>
+            </Form>
+          </div>
         </Card>
         <div style={{ width: '100%' }}>
           <Footer />
