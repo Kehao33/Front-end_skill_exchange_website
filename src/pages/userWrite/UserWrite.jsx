@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react'
 import Editor from 'for-editor'
+import $ from 'jquery'
 import { connect } from 'react-redux'
 import './UserWrite.less'
 import {
@@ -29,9 +30,23 @@ class UserWrite extends Component {
     }
   }
 
-  addImg($file) {
-    this.$vm.current.$img2Url($file.name, 'file_url')
-    console.log('$file: ', $file)
+  async addImg($file) {
+    const fileData = new FormData()
+    fileData.append('file', $file)
+    const self = this
+    $.ajax({
+      url: '/user/pic-write',
+      data: fileData,
+      type: 'POST',
+      processData: false, //必须
+      contentType: false, //必须
+      success: function (data) {
+        data.isOk && self.$vm.current.$img2Url($file.name, data.artUrl)
+      },
+      error: function (data) {
+        !data.isOk && message.error(data.msg)
+      },
+    })
   }
 
   // 处理for-editor富文本改变数据的函数

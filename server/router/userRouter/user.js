@@ -139,23 +139,31 @@ uRouter.post('/update-userinfo', async function (req, res) {
 })
 // ********************* 用户中心 userCenter操作 END ************
 
-// 保存用户创作文章的保存
-uRouter.post('/write', async function (req, res) {
-  const { title, content, artTags, artType, author } = req.body
+// 实现文章的图片上传
+uRouter.post('/pic-write', async function (req, res) {
   const form = formidable({
     keepExtensions: true,
     multiples: true,
-    uploadDir: path.join(__dirname, './../../../public/uploads'),
+    uploadDir: path.join(__dirname, './../../../public/uploads/articlePic'),
   })
+  form.parse(req, (err, fields, files) => {
+    if (err)
+      return res
+        .status(200)
+        .json({ artUrl: '', msg: '上传图片失败,请重新操作', isOk: 0 })
+    else
+      return res.status(200).json({
+        artUrl: files.file.path.split('public')[1],
+        msg: '上传图片成功',
+        isOk: 1,
+      })
+  })
+})
+// 保存用户创作文章的保存
+uRouter.post('/write', async function (req, res) {
+  const { title, content, artTags, artType, author } = req.body
   const converter = new showdown.Converter() //初始化转换器
   const htmlCt = converter.makeHtml(content)
-  // form.parse(req, (err, fields, files) => {
-  //   console.log('fields: ', fields)
-  //   console.log('err: ', err)
-  //   console.log('files: ', files)
-  //   res.writeHead(200, { 'content-type': 'application/json' })
-  //   res.end(JSON.stringify({ fields, files }, null, 2))
-  // })
 
   if (
     title.trim().length !== 0 ||

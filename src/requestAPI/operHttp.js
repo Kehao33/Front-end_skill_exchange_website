@@ -72,6 +72,10 @@ export async function reqModAvatar(reqData, method = 'POST') {
 export async function reqAddArt(reqData = {}, method = 'POST') {
   return $http('/user/write', reqData, method)
 }
+// 发表文章时保存上传图片
+export async function reqAddPic(reqData = {}, method = 'POST') {
+  return $http('/user/pic-write', reqData, method)
+}
 // 修改文章
 export async function reqModifyArt(reqData = {}, method = 'POST') {
   return $http('/user/modifyArt', reqData, method)
