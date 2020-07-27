@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk' // 一个让redux可以异步处理的插件
 import {ConfigProvider} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN';
 import { HashRouter, Route } from 'react-router-dom'

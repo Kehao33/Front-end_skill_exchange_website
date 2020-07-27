@@ -117,7 +117,7 @@ export function login(userObj) {
         })
       )
     } else {
-      message.error('登录失败')
+      message.error(data.msg)
       dispatch(errorMsg(data.msg))
     }
   }

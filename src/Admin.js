@@ -152,10 +152,10 @@ class Admin extends Component {
 
     const formLayout = {
       labelCol: {
-        span: 4,
+        span: 5,
       },
       wrapperCol: {
-        span: 20,
+        span: 19,
       },
     }
 
@@ -208,7 +208,7 @@ class Admin extends Component {
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  比国王富有 <DownOutlined />
+                  {userObj && userObj.nickName} <DownOutlined />
                 </span>
               </Dropdown>
             </span>

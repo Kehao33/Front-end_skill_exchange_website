@@ -64,7 +64,7 @@ class Register extends Component {
         },
         sm: {
           span: 16,
-          offset: 6,
+          offset: 4,
         },
       },
     }
@@ -95,7 +95,8 @@ class Register extends Component {
                   rules={[
                     {
                       required: true,
-                      message: '请输入您的昵称呀!',
+                      message: '昵称不能为空且不能超过16个字符!',
+                      max: 16,
                       whitespace: true,
                     },
                   ]}
@@ -190,10 +191,7 @@ class Register extends Component {
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="点击图片可刷新验证码"
-                    />
+                    <Input size="large" placeholder="点击图片可刷新验证码" />
                   </Form.Item>
                 </Col>
                 <Col span={4}>

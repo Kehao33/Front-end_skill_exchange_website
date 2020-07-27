@@ -28,7 +28,6 @@ const codeConfig = {
 pubRouter.get('/captcha', function (req, res) {
   const capTools = svgCaptcha.create(codeConfig)
   req.session.rightCaptcha = capTools.text.toLowerCase()
-  console.log(capTools.text)
   res.type('svg')
   res.status(200).send(capTools.data)
 })
@@ -109,6 +108,8 @@ pubRouter.post('/login', function (req, res) {
           .status(200)
           .json({ msg: '密码不正确，请确认密码是否正确', isOK: 0 })
       }
+    } else {
+      return res.status(200).json({ msg: '账户不存在，请先进行注册', isOK: 0 })
     }
   })
 })

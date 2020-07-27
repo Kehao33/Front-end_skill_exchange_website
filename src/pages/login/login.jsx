@@ -12,6 +12,7 @@ import './login.less'
 class Login extends Component {
   // 提交登录信息触发
   onFinish = async (loginForm) => {
+    console.log('loginForm: ',loginForm)
     this.props.login(loginForm)
   }
   render() {
@@ -90,9 +91,9 @@ class Login extends Component {
                           placeholder="请输入密码"
                         />
                       </Form.Item>
-                      <Form.Item>
+                      {/* <Form.Item>
                         <Row justify="space-between">
-                          {/* <Col {...loginFrom}>
+                          <Col {...loginFrom}>
                             <Form.Item
                               name="remember"
                               valuePropName="checked"
@@ -100,7 +101,7 @@ class Login extends Component {
                             >
                               <Checkbox>记住密码</Checkbox>
                             </Form.Item>
-                          </Col> */}
+                          </Col>
                           <Col {...loginFrom}>
                             <a
                               className="login-form-forgot"
@@ -110,7 +111,7 @@ class Login extends Component {
                             </a>
                           </Col>
                         </Row>
-                      </Form.Item>
+                      </Form.Item> */}
 
                       <Form.Item>
                         <Button

@@ -7,7 +7,6 @@ import {
   List,
   Avatar,
   message,
-  Anchor,
   Divider,
   Modal,
   Skeleton,
@@ -27,7 +26,6 @@ import {
 } from './../../requestAPI/operHttp.js'
 import { formatDate } from './../../tools.js'
 import Footer from './../../components/footer/footer'
-const { Link } = Anchor
 const { confirm } = Modal
 const Article = (props) => {
   // cntData: 文章对应的评论数据
@@ -90,7 +88,7 @@ const Article = (props) => {
         articleId: id,
         authorId: userObj && userObj._id,
       })
-      console.log('return dadat:', data)
+
       if (data.data.isLike) {
         setShowLike(true)
         setArtData(data.data.showArt)

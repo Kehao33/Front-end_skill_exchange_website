@@ -260,10 +260,12 @@ uRouter.post('/hit-like', async function (req, res) {
     if (findErr || err || upErr) {
       return res.status(200).json({ data: [], msg: '请刷新页面', isOk: 0 })
     } else {
-      const showArt = await artModel.findOne({ _id: articleId })
+      const showArt = await artModel
+        .findById({ _id: articleId })
+        .populate('author')
       const comments = await commentModel
         .find({ articleId: articleId })
-        .populate('authorId')
+        .populate('author')
       return res.status(200).json({
         data: { isLike: result.isLike, showArt, comments },
         msg: '点赞成功',
@@ -284,7 +286,7 @@ uRouter.post('/hit-like', async function (req, res) {
       const comments = await commentModel
         .find({ articleId })
         .populate('authorId')
-      const showArt = await artModel.findOne({ _id: articleId })
+      const showArt = await artModel.findById({ _id: articleId }).populate('author')
       return res.status(200).json({
         data: { isLike: 0, showArt, comments }, //表示取消点赞成功
         msg: '取消点赞成功',

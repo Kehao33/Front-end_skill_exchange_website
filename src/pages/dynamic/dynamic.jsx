@@ -18,7 +18,7 @@ import {
   reqCarArt,
 } from './../../requestAPI/operHttp.js'
 // 请求文章的跳过的条数
-let count = 0
+// let count = 0
 // 动态标签展示数据
 let setArr = new Set()
 class Dynamic extends Component {
@@ -26,6 +26,7 @@ class Dynamic extends Component {
     super(props)
     // 热门文章的数据
     this.hotArtData = []
+    this.count = 0
     this.getCarouselData = this.getCarouselData.bind(this)
     this.getHotData = this.getHotData.bind(this)
 
@@ -66,7 +67,7 @@ class Dynamic extends Component {
   }
 
   getLeftData = async (callback) => {
-    const { data } = await reqDynamic({ count: count })
+    const { data } = await reqDynamic({ count: this.count })
     // 获取跑马灯下的文章列表
     if (data.data.length === 0) {
       message.warning('已加载完所有数据')
@@ -80,7 +81,7 @@ class Dynamic extends Component {
       this.setState({ shwoBtn: true })
       callback(data)
     }
-    count += 3
+    this.count += 3
     callback(data)
   }
 
@@ -174,11 +175,7 @@ class Dynamic extends Component {
                         href={`#/user/${item.author._id}`}
                         className="u-center"
                       >
-                        {item && item.author.avatarUrl ? (
-                          <Avatar src={item.author.avatarUrl} />
-                        ) : (
-                          <Avatar>U</Avatar>
-                        )}
+                        <Avatar src="/img/a3.jpg" />
                         &nbsp;&nbsp;{item && item.author.nickName}
                       </a>,
                       <IconText
@@ -257,11 +254,7 @@ class Dynamic extends Component {
                             href={`#/user/${item.author._id}`}
                             className="u-center"
                           >
-                            {item && item.author.avatarUrl ? (
-                              <Avatar src={item.author.avatarUrl} />
-                            ) : (
-                              <Avatar>U</Avatar>
-                            )}
+                            <Avatar src="/img/a3.jpg" />
                             &nbsp;&nbsp;{item.author.nickName}
                           </a>,
                           <IconText
