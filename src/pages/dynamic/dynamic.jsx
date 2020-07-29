@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   List,
   Avatar,
@@ -145,6 +146,8 @@ class Dynamic extends Component {
         {text}
       </span>
     )
+
+    console.log('list', list)
     return (
       <div className="dynamic-wrap">
         <div className="dynamic">
@@ -154,9 +157,9 @@ class Dynamic extends Component {
                 <Carousel effect="fade" autoplay={true} easing>
                   {carArtData.map((item, index) => (
                     <div className={`carousel-div${index + 1}`} key={item._id}>
-                      <a href={`#/article/${item && item._id}`}>
+                      <Link to={`/article/${item && item._id}`}>
                         {item && item.title}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </Carousel>
@@ -171,13 +174,13 @@ class Dynamic extends Component {
                 renderItem={(item) => (
                   <List.Item
                     actions={[
-                      <a
-                        href={`#/user/${item.author._id}`}
+                      <Link
+                        to={`/user/${item.author._id}`}
                         className="u-center"
                       >
-                        <Avatar src="/img/a3.jpg" />
+                        <Avatar src={item && item.author.avatarUrl} />
                         &nbsp;&nbsp;{item && item.author.nickName}
-                      </a>,
+                      </Link>,
                       <IconText
                         icon={EyeOutlined}
                         text={item && item.readNumber}
@@ -202,22 +205,22 @@ class Dynamic extends Component {
                     >
                       <List.Item.Meta
                         title={
-                          <a
+                          <Link
                             className="article-title"
-                            href={`#/article/${item._id}`}
+                            to={`/article/${item._id}`}
                           >
                             {item && item.title}
-                          </a>
+                          </Link>
                         }
                       />
-                      <a
+                      <Link
                         className="article-content"
-                        href={`#/article/${item._id}`}
+                        to={`/article/${item._id}`}
                       >
                         {item &&
                           item.content.replace(/<[^>]+>/g, '').substr(0, 150) +
                             '...'}
-                      </a>
+                      </Link>
                     </Skeleton>
                   </List.Item>
                 )}
@@ -250,13 +253,13 @@ class Dynamic extends Component {
                       <List.Item
                         key={item.title}
                         actions={[
-                          <a
-                            href={`#/user/${item.author._id}`}
+                          <Link
+                            to={`/user/${item.author._id}`}
                             className="u-center"
                           >
-                            <Avatar src="/img/a3.jpg" />
+                            <Avatar src={item && item.author.avatarUrl} />
                             &nbsp;&nbsp;{item.author.nickName}
-                          </a>,
+                          </Link>,
                           <IconText
                             icon={EyeOutlined}
                             text={item.readNumber}
@@ -266,21 +269,21 @@ class Dynamic extends Component {
                       >
                         <List.Item.Meta
                           title={
-                            <a
+                            <Link
                               className="article-title"
-                              href={`#/article/${item && item._id}`}
+                              to={`/article/${item && item._id}`}
                             >
                               {item.title}
-                            </a>
+                            </Link>
                           }
                         />
-                        <a
-                          href={`#/article/${item && item._id}`}
+                        <Link
+                          to={`/article/${item && item._id}`}
                           className="article-content"
                         >
                           {item.content.replace(/<[^>]+>/g, '').substr(0, 52) +
                             '...'}
-                        </a>
+                        </Link>
                       </List.Item>
                     )}
                   />
