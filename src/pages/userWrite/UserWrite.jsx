@@ -115,6 +115,38 @@ class UserWrite extends Component {
             >
               <Input size="large" placeholder="请输入标题" width="100%" />
             </Form.Item>
+
+            <Form.Item
+              style={{ display: 'none' }}
+              name="author"
+              rules={[
+                {
+                  required: true,
+                  message: '作者ID不能少',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="请输入标题" width="100%" />
+            </Form.Item>
+            <Form.Item
+              name="content"
+              rules={[
+                {
+                  required: true,
+                  message: '文章内容不可缺少',
+                },
+              ]}
+            >
+              <Editor
+                height={460}
+                addImg={($file) => this.addImg($file)}
+                ref={this.$vm}
+                value={this.state.value}
+                onChange={() => this.handleEditorChange()}
+                placeholder="请在此处创作您的文章"
+                width="100%"
+              />
+            </Form.Item>
             <Form.Item
               name="artType"
               rules={[
@@ -153,37 +185,6 @@ class UserWrite extends Component {
               >
                 {optionsChilren}
               </Select>
-            </Form.Item>
-            <Form.Item
-              style={{ display: 'none' }}
-              name="author"
-              rules={[
-                {
-                  required: true,
-                  message: '作者ID不能少',
-                },
-              ]}
-            >
-              <Input size="large" placeholder="请输入标题" width="100%" />
-            </Form.Item>
-            <Form.Item
-              name="content"
-              rules={[
-                {
-                  required: true,
-                  message: '文章内容不可缺少',
-                },
-              ]}
-            >
-              <Editor
-                height={460}
-                addImg={($file) => this.addImg($file)}
-                ref={this.$vm}
-                value={this.state.value}
-                onChange={() => this.handleEditorChange()}
-                placeholder="请在此处创作您的文章"
-                width="100%"
-              />
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 8, offset: 10 }}>

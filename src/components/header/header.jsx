@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter, Link } from 'react-router-dom'
 import { Menu, Avatar, Dropdown, Modal, Form, Input } from 'antd'
 import { connect } from 'react-redux'
 import {
@@ -117,11 +117,13 @@ class Header extends Component {
         </div>
 
         <div className="oper-user">
-          {userObj && userObj.avatarUrl ? (
-            <Avatar src={userObj.avatarUrl} />
-          ) : (
-            <Avatar>U</Avatar>
-          )}
+          <Link to={`/user/${this.props.userObj._id}`}>
+            {userObj && userObj.avatarUrl ? (
+              <Avatar src={userObj.avatarUrl} />
+            ) : (
+              <Avatar>U</Avatar>
+            )}
+          </Link>
           &nbsp;
           <Dropdown overlay={menu}>
             <span

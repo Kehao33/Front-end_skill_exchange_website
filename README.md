@@ -24,3 +24,17 @@ React.js + Ant Design + MongoDB + Redux
 1. 在 React.js 中最好使用简洁的 Hooks，不要滥用状态组件
 2. 对库或者是功能进行封装管理、便于统一管理
 3. 了解底层，更能够很快的解决 bug 和其原理，使用起来也印象深刻,比如setState的'异步'为啥子会这样，这个跟React的调用栈有关
+
+
+
+###  预览效果图：
+
+![](C:\Users\jake\Desktop\img\jianli1.png)
+
+
+
+![](C:\Users\jake\Desktop\img\jianli2.png)
+
+
+
+![](C:\Users\jake\Desktop\img\jianlifor.png)
