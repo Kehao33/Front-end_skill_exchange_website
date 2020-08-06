@@ -163,7 +163,6 @@ class UserCenter extends Component {
   // 实现获取用户信息
   async getUserByUid(id) {
     const { data } = await reqUserByUid({ id }, 'GET')
-    console.log('userDATA:', data)
     this.setState({
       renderUser: data.data[0],
       imageUrl: data.data[0].avatarUrl,

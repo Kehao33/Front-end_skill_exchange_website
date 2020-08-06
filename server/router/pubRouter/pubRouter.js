@@ -22,7 +22,7 @@ const codeConfig = {
   width: 112,
   color: '#ff3300',
   background: '#fafafa',
-  fontSize: 35,
+  fontSize: 41,
 }
 
 // 注册时发送的验证码
@@ -32,6 +32,7 @@ pubRouter.get('/captcha', function (req, res) {
   res.type('svg')
   res.status(200).send(capTools.data)
 })
+
 pubRouter.get('/log-captcha', function (req, res) {
   const codeConfig = {
     size: 4, // 验证码长度
@@ -40,7 +41,7 @@ pubRouter.get('/log-captcha', function (req, res) {
     height: 38,
     width: 112,
     color: '#ff3300',
-    fontSize: 35,
+    fontSize: 41,
   }
   const capTools = svgCaptcha.create(codeConfig)
   req.session.loginCaptcha = capTools.text.toLowerCase()
@@ -52,6 +53,9 @@ pubRouter.post('/register', function (req, res) {
   const { nickName, userEmail, captcha, userPwd, confirmPwd } = req.body
   if (captcha.toLowerCase() !== req.session.rightCaptcha) {
     return res.status(200).json({ msg: '验证码有误，请重新输入!', isOk: 0 })
+  }
+  if(userPwd.length<6&&confirmPwd.length>18){
+    return res.status(200).json({ msg: '密码长度在6~18位区间!', isOk: 0 })
   }
   // 否则，清空验证码
   req.session.rightCaptcha = null

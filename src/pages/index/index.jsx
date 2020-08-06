@@ -31,20 +31,22 @@ class Index extends Component {
                   <div className="intro">
                     <p className="motto">我们一起UP, 让前端更前端</p>
                     <p className="up">有志者,事竟成</p>
-                    <Button
-                      type="primary"
-                      block
-                      size="small"
-                      style={{
-                        width: '86px',
-                        height: '36px',
-                        minWidth: 86,
-                        minHeight: 36,
-                        marginBottom: 148,
-                      }}
-                    >
-                      Learn More
-                    </Button>
+                    <a href="/dynamic">
+                      <Button
+                        type="primary"
+                        block
+                        size="small"
+                        style={{
+                          width: '86px',
+                          height: '36px',
+                          minWidth: 86,
+                          minHeight: 36,
+                          marginBottom: 148,
+                        }}
+                      >
+                        Learn More
+                      </Button>
+                    </a>
 
                     <div className="copyright">
                       CopyRight©2020 JakeQu 版权所有

@@ -19,7 +19,6 @@ class Register extends Component {
   // 表单提交的时候自动触发的事件，values是表单内容对象
   onFinish = (formData) => {
     const { history, register, isAuth } = this.props
-    console.log('formData:', formData)
     register(formData)
     if (isAuth) {
       history.replace('/login')
@@ -31,11 +30,11 @@ class Register extends Component {
   getCaptcha = () => {
     const timer = setTimeout(async () => {
       await reqGetCaptcha({ time: Date.now() })
-      // console.log(this.captchaRef.current)
-      this.captchaRef.current.src = `http://localhost:3000/public/captcha?time=${Date.now()}`
+      this.captchaRef.current.src = `/public/captcha?time=${Date.now()}`
       clearTimeout(timer)
-    }, 500)
+    }, 300)
   }
+
   render() {
     const formItemLayout = {
       labelCol: {
@@ -136,7 +135,14 @@ class Register extends Component {
                   rules={[
                     {
                       required: true,
+                      min: 6,
                       message: '请输入您的密码!',
+                    },
+                    {
+                      type: 'string',
+                      max: 18,
+                      min: 6,
+                      message: '密码必须在6~18之间',
                     },
                   ]}
                   hasFeedback
@@ -158,6 +164,12 @@ class Register extends Component {
                     {
                       required: true,
                       message: '请核对您的密码!',
+                    },
+                    {
+                      type: 'string',
+                      max: 18,
+                      min: 6,
+                      message: '密码必须在6~18之间',
                     },
                     ({ getFieldValue }) => ({
                       validator(rule, value) {
@@ -200,6 +212,7 @@ class Register extends Component {
                     style={{ zIndex: 999 }}
                     onClick={this.getCaptcha}
                     // src={`http://localhost:3000/public/captcha`}
+                    // 第一次的时候src会主动进行请求服务端的数据
                     src={`/public/captcha`}
                     alt="验证码照片"
                   />

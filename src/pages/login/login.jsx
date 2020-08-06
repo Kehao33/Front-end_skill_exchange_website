@@ -12,27 +12,20 @@ import './login.less'
 // @connect((state) => state.user, { login })
 class Login extends Component {
   // 提交登录信息触发
-  state = {
-    captcha: '',
-  }
+  captcha = ''
   loginCaptcha = createRef()
   onFinish = async (loginForm) => {
-    console.log('loginForm',loginForm);
     this.props.login(loginForm)
   }
 
   getLoginCaptcha = () => {
-    setTimeout(async () => {
+    var timer = setTimeout(async () => {
+      console.log('是否执行')
       let data = await reqLoginCaptcha({ time: Date.now() })
       // 需要进行动态的更新数据才行
-      this.loginCaptcha.current.src = data.config.url + '?' + Date.now()
-      this.setState({
-        captcha: data,
-      })
+      this.loginCaptcha.current.src = data.config.url + '?time=' + Date.now()
+      clearTimeout(timer)
     }, 300)
-  }
-  componentDidMount() {
-    this.getLoginCaptcha()
   }
 
   render() {
@@ -98,7 +91,7 @@ class Login extends Component {
                           prefix={<LockOutlined />}
                           type="password"
                           size="large"
-                          placeholder="请输入密码"
+                          placeholder="点击验证码可刷新"
                         />
                       </Form.Item>
                       <Form.Item
@@ -120,9 +113,7 @@ class Login extends Component {
                       </Form.Item>
                       <img
                         ref={this.loginCaptcha}
-                        src={`${
-                          this.state.captcha && this.state.captcha.config.url
-                        }`}
+                        src={`/public/log-captcha`}
                         className="login-captcha"
                         alt="验证码"
                         onClick={this.getLoginCaptcha}
