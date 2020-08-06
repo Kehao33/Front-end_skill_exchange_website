@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { message } from 'antd'
 import { connect } from 'react-redux'
 
@@ -24,7 +24,7 @@ import './common.less'
 // // import Home from './pages/container/home'
 class App extends Component {
   // componentDidUpdate() {
-  //   const { userObj, history, location } = this.props
+  //   const { userObj, location } = this.props
   //   const isLogin = userObj ? 1 : 0
   //   if (!isLogin && /user/g.test(location.pathname)) {
   //     message.warning('您未登录，请登录')
@@ -35,14 +35,14 @@ class App extends Component {
   //     /admin/g.test(location.pathname)
   //   ) {
   //     message.error('您的权限不够，系统默认跳转到首页')
-  //     history.replace('/index')
+  //     // history.replace('/index')
   //   }
   // }
   render() {
     const { userObj } = this.props
     const isLogin = userObj ? 1 : 0
     return (
-      <HashRouter>
+      <Router>
         <div className="App">
           <Header />
           <Switch>
@@ -105,7 +105,7 @@ class App extends Component {
             <Route render={() => <Redirect to="/index" push />} />
           </Switch>
         </div>
-      </HashRouter>
+      </Router>
     )
   }
 }

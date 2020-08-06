@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk' // 一个让redux可以异步处理的插件
 import {ConfigProvider} from 'antd'
 import zhCN from 'antd/es/locale/zh_CN';
-import { HashRouter, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import reducers from './reducer.js'
@@ -23,9 +23,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <ConfigProvider  locale={zhCN}>
-      <HashRouter>
+      <Router>
         <Route path={`/`} component={App}></Route>
-      </HashRouter>
+      </Router>
     </ConfigProvider>
   </Provider>,
   document.getElementById('root')

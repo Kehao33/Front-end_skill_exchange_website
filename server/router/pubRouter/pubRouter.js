@@ -25,9 +25,25 @@ const codeConfig = {
   fontSize: 35,
 }
 
+// 注册时发送的验证码
 pubRouter.get('/captcha', function (req, res) {
   const capTools = svgCaptcha.create(codeConfig)
   req.session.rightCaptcha = capTools.text.toLowerCase()
+  res.type('svg')
+  res.status(200).send(capTools.data)
+})
+pubRouter.get('/log-captcha', function (req, res) {
+  const codeConfig = {
+    size: 4, // 验证码长度
+    ignoreChars: '0o1i', // 验证码字符中排除 0o1i
+    noise: 3, // 干扰线条的数量
+    height: 38,
+    width: 112,
+    color: '#ff3300',
+    fontSize: 35,
+  }
+  const capTools = svgCaptcha.create(codeConfig)
+  req.session.loginCaptcha = capTools.text.toLowerCase()
   res.type('svg')
   res.status(200).send(capTools.data)
 })
@@ -37,6 +53,8 @@ pubRouter.post('/register', function (req, res) {
   if (captcha.toLowerCase() !== req.session.rightCaptcha) {
     return res.status(200).json({ msg: '验证码有误，请重新输入!', isOk: 0 })
   }
+  // 否则，清空验证码
+  req.session.rightCaptcha = null
   userModel.findOne({ userEmail }, function (err, doc) {
     if (userPwd !== confirmPwd || !userEmail) {
       // 400Bad Request客户端请求的语法错误
@@ -69,7 +87,10 @@ pubRouter.post('/register', function (req, res) {
 })
 // 用户登录处理路由
 pubRouter.post('/login', function (req, res) {
-  let { userEmail, userPwd } = req.body
+  let { userEmail, userPwd, loginCaptcha } = req.body
+  if (loginCaptcha.toLowerCase() !== req.session.loginCaptcha) {
+    return res.status(200).send({ msg: '验证码有误，请重新输入!', isOk: 0 })
+  }
 
   if (!userPwd || !userEmail) {
     // 400Bad Request客户端请求的语法错误

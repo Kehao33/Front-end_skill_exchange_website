@@ -28,7 +28,7 @@ class Resource extends Component {
 
   async componentDidMount() {
     const { data } = await reqResource()
-    data.data.forEach((item) => (item['href'] = '#/article/' + item._id))
+    data.data.forEach((item) => (item['href'] = '/article/' + item._id))
     this.setState({
       allData: data.data,
       videoData: data.data.filter(

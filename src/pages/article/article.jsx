@@ -117,7 +117,7 @@ const Article = (props) => {
                 <div className="article-fl">
                   <a
                     className="author"
-                    href={`#/user/${artData && artData.author._id}`}
+                    href={`/user/${artData && artData.author._id}`}
                   >
                     {artData && artData.author.nickName}
                   </a>
@@ -197,7 +197,7 @@ const Article = (props) => {
                     <List.Item>
                       <List.Item.Meta
                         avatar={
-                          <a href={`#/user/${item && item.authorId._id}`}>
+                          <a href={`/user/${item && item.authorId._id}`}>
                             {item && item.authorId.avatarUrl ? (
                               <Avatar src={item.authorId.avatarUrl} />
                             ) : (
@@ -206,7 +206,7 @@ const Article = (props) => {
                           </a>
                         }
                         title={
-                          <a href={`#/user/${item && item.authorId._id}`}>
+                          <a href={`/user/${item && item.authorId._id}`}>
                             {item && item.authorId.nickName}
                           </a>
                         }

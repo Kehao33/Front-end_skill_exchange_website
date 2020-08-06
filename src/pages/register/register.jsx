@@ -14,7 +14,6 @@ class Register extends Component {
   constructor(props) {
     super(props)
     this.captchaRef = createRef()
-    this.state = { captchaImg: '' }
   }
 
   // 表单提交的时候自动触发的事件，values是表单内容对象
@@ -32,10 +31,10 @@ class Register extends Component {
   getCaptcha = () => {
     const timer = setTimeout(async () => {
       await reqGetCaptcha({ time: Date.now() })
-      console.log(this.captchaRef)
+      // console.log(this.captchaRef.current)
       this.captchaRef.current.src = `http://localhost:3000/public/captcha?time=${Date.now()}`
       clearTimeout(timer)
-    }, 1000)
+    }, 500)
   }
   render() {
     const formItemLayout = {
@@ -180,7 +179,7 @@ class Register extends Component {
               </Row>
 
               <Row gutter={2}>
-                <Col span={18}>
+                <Col span={18} className="captcha-input">
                   <Form.Item
                     label="注册校验"
                     name="captcha"
@@ -200,7 +199,8 @@ class Register extends Component {
                     className="captcha-img"
                     style={{ zIndex: 999 }}
                     onClick={this.getCaptcha}
-                    src={`http://localhost:3000/public/captcha`}
+                    // src={`http://localhost:3000/public/captcha`}
+                    src={`/public/captcha`}
                     alt="验证码照片"
                   />
                 </Col>
@@ -241,7 +241,7 @@ class Register extends Component {
                   立即注册
                 </Button>
                 <div style={{ marginTop: 20 }}>
-                  有账号, <a href="#/login">现在就去登录!</a>
+                  有账号, <a href="/login">现在就去登录!</a>
                 </div>
               </Form.Item>
             </Form>

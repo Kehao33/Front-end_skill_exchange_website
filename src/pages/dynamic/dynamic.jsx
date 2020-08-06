@@ -205,22 +205,26 @@ class Dynamic extends Component {
                     >
                       <List.Item.Meta
                         title={
-                          <Link
+                          <a
                             className="article-title"
-                            to={`/article/${item._id}`}
+                            href={`/article/${item._id}`}
+                            rel="noopener noreferrer"
+                            target="_blank"
                           >
                             {item && item.title}
-                          </Link>
+                          </a>
                         }
                       />
-                      <Link
+                      <a
                         className="article-content"
-                        to={`/article/${item._id}`}
+                        href={`/article/${item._id}`}
+                        target='_blank'
+                        rel="noopener noreferrer"
                       >
                         {item &&
                           item.content.replace(/<[^>]+>/g, '').substr(0, 150) +
                             '...'}
-                      </Link>
+                      </a>
                     </Skeleton>
                   </List.Item>
                 )}

@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, SendOutlined } from '@ant-design/icons'
+import { reqLoginCaptcha } from './../../requestAPI/operHttp.js'
 import Footer from './../../components/footer/footer.jsx'
 import { Redirect } from 'react-router-dom'
 import { login } from './../../redux/user.redux.js'
@@ -11,13 +12,31 @@ import './login.less'
 // @connect((state) => state.user, { login })
 class Login extends Component {
   // 提交登录信息触发
+  state = {
+    captcha: '',
+  }
+  loginCaptcha = createRef()
   onFinish = async (loginForm) => {
-    console.log('loginForm: ',loginForm)
+    console.log('loginForm',loginForm);
     this.props.login(loginForm)
   }
+
+  getLoginCaptcha = () => {
+    setTimeout(async () => {
+      let data = await reqLoginCaptcha({ time: Date.now() })
+      // 需要进行动态的更新数据才行
+      this.loginCaptcha.current.src = data.config.url + '?' + Date.now()
+      this.setState({
+        captcha: data,
+      })
+    }, 300)
+  }
+  componentDidMount() {
+    this.getLoginCaptcha()
+  }
+
   render() {
     const { redirectTo, userObj } = this.props
-
     if (redirectTo && userObj) {
       return <Redirect to={redirectTo} />
     }
@@ -28,15 +47,6 @@ class Login extends Component {
       sm: {
         span: 24,
       },
-    }
-    const loginFrom = {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 12,
-      },
-      offset: 14,
     }
 
     return (
@@ -91,6 +101,34 @@ class Login extends Component {
                           placeholder="请输入密码"
                         />
                       </Form.Item>
+                      <Form.Item
+                        name="loginCaptcha"
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入验证码!',
+                          },
+                        ]}
+                      >
+                        <Input
+                          style={{ width: '80%' }}
+                          prefix={<SendOutlined />}
+                          type=""
+                          size="large"
+                          placeholder="请输入验证码"
+                        />
+                      </Form.Item>
+                      <img
+                        ref={this.loginCaptcha}
+                        src={`${
+                          this.state.captcha && this.state.captcha.config.url
+                        }`}
+                        className="login-captcha"
+                        alt="验证码"
+                        onClick={this.getLoginCaptcha}
+                        title="点我刷新验证码"
+                      />
+
                       {/* <Form.Item>
                         <Row justify="space-between">
                           <Col {...loginFrom}>
@@ -122,7 +160,7 @@ class Login extends Component {
                           登录
                         </Button>
                         <br /> <br />
-                        没有账号, <a href="#/register">现在去注册!</a>
+                        没有账号, <a href="/register">现在去注册!</a>
                       </Form.Item>
                     </Form>
                   </div>

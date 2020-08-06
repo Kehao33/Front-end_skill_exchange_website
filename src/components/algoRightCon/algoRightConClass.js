@@ -163,7 +163,7 @@ class AlgoRightCon extends Component {
                 <List.Item
                   actions={[
                     <a
-                      href={`#/user/${item._id && item.author._id}`}
+                      href={`/user/${item._id && item.author._id}`}
                       className="u-center"
                     >
                       {item && item.author.avatarUrl ? (
@@ -194,13 +194,13 @@ class AlgoRightCon extends Component {
                     title={
                       <a
                         className="article-title"
-                        href={`#/article/${item && item._id}`}
+                        href={`/article/${item && item._id}`}
                       >
                         {item._id && item.title}
                       </a>
                     }
                   />
-                  <a className="article-content" href={`#/article/${item._id}`}>
+                  <a className="article-content" href={`/article/${item._id}`}>
                     {item._id &&
                       item.content.replace(/<[^>]+>/g, '').substr(0, 88) +
                         '...'}

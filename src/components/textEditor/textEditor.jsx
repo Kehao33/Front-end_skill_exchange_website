@@ -1,6 +1,4 @@
 import React, { Component, createRef } from 'react'
-// import logo from './logo.svg';
-// import './E.css';
 import E from 'wangeditor'
 
 class Editor extends Component {
