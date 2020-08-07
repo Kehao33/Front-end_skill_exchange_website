@@ -27,10 +27,29 @@ class Editor extends Component {
       })
       this.props.setEditorContent(html)
     }
+    editor.customConfig.fontNames = [
+      '宋体',
+      '微软雅黑',
+      'Arial',
+      'Tahoma',
+      'Verdana',
+    ]
+    editor.customConfig.colors = [
+      '#000000',
+      '#eeece0',
+      '#1c487f',
+      '#4d80bf',
+      '#c24f4a',
+      '#8baa4a',
+      '#7b5ba1',
+      '#46acc8',
+      '#f9963b',
+      '#ffffff',
+    ]
     editor.create()
   }
   clickHandle() {
-    alert(this.state.editorContent)
+    // alert(this.state.editorContent)
   }
 }
 

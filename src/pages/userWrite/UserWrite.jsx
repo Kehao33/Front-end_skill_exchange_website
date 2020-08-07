@@ -33,6 +33,7 @@ class UserWrite extends Component {
   async addImg($file) {
     const fileData = new FormData()
     fileData.append('file', $file)
+    console.log('执行了')
     const self = this
     $.ajax({
       url: '/user/pic-write',

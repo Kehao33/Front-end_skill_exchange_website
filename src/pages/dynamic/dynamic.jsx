@@ -82,7 +82,7 @@ class Dynamic extends Component {
       this.setState({ shwoBtn: true })
       callback(data)
     }
-    this.count += 3
+    this.count += 4
     callback(data)
   }
 
@@ -235,7 +235,7 @@ class Dynamic extends Component {
           <div className="dynamic-right">
             <div className="label">
               <Divider orientation="left">动态标签</Divider>
-              <Button ghost className="articleActive" style={{ margin: 5 }}>
+              <Button ghost  style={{ margin: 5 }}>
                 推荐
               </Button>
               {/* 在此遍历生成标签 */}

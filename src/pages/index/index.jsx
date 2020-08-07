@@ -49,7 +49,7 @@ class Index extends Component {
                     </a>
 
                     <div className="copyright">
-                      CopyRight©2020 JakeQu 版权所有
+                      CopyRight©2020 JakeQuc 版权所有
                     </div>
                   </div>
                 </div>
@@ -57,9 +57,9 @@ class Index extends Component {
                   <div className="fl">
                     <Typography>
                       <Title level={2}>知识角</Title>
-                      <b>没有独立的技术，那就撸起袖子加油干</b>
+                      <b className='slogan'>没有独立的技术，那就撸起袖子加油干</b>
                       <Paragraph>
-                        <ul style={{ marginTop: 10 }}>
+                        <ul className='corner-des'>
                           <li>
                             <span>前端</span>
                             <p>
@@ -87,8 +87,8 @@ class Index extends Component {
                 </div>
                 <div className="index section nutrition">
                   <div className="nutri-title">这里有料</div>
-                  <ul>
-                    <li>
+                  <ul className="nutr-wrap">
+                    <li className="nutr-item">
                       <a
                         href="https://juejin.im/post/582e96a00ce463006cf15198"
                         target="_blank"
@@ -96,8 +96,8 @@ class Index extends Component {
                       >
                         <div className="nutr-card">
                           <div className="nutr-header-wrap">
-                            <span>推荐网站</span>
-                            <p>
+                            <span className="nutr-header">推荐网站</span>
+                            <p className="nutr-into">
                               我们一起，
                               <br /> 则其善者而从之
                             </p>
@@ -107,7 +107,7 @@ class Index extends Component {
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li className="nutr-item">
                       <a
                         href="https://www.zhihu.com/question/56200585"
                         target="_blank"
@@ -115,8 +115,8 @@ class Index extends Component {
                       >
                         <div className="nutr-card">
                           <div className="nutr-header-wrap">
-                            <span>前端学习路线</span>
-                            <p>
+                            <span className="nutr-header">前端学习路线</span>
+                            <p className="nutr-into">
                               学习路线，
                               <br /> 让每天的拉弓都有意义
                             </p>
@@ -126,7 +126,7 @@ class Index extends Component {
                         </div>
                       </a>
                     </li>
-                    <li>
+                    <li className="nutr-item">
                       <a
                         href="https://juejin.im/post/5d387f696fb9a07eeb13ea60"
                         target="_blank"
@@ -134,8 +134,8 @@ class Index extends Component {
                       >
                         <div className="nutr-card">
                           <div className="nutr-header-wrap">
-                            <span>精品文章推荐</span>
-                            <p>
+                            <span className="nutr-header">精品文章推荐</span>
+                            <p className="nutr-into">
                               善于阅读，
                               <br /> 可以让我们越来越聪明
                             </p>

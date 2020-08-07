@@ -179,7 +179,7 @@ class Footer extends Component {
             <hr />
             <Row>
               <Col span={8}>
-                <span className="right">© 2017-2019 JakeQu 版权所有</span>
+                <span className="right">© 2019-2020 JakeQuc 版权所有</span>
               </Col>
             </Row>
           </div>

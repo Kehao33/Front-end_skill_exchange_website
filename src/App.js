@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import { message } from 'antd'
 import { connect } from 'react-redux'
 
 import './pages/common/common.less'
@@ -15,11 +14,11 @@ import Article from './pages/article/article.jsx'
 import UserCenter from './pages/userCenter/userCenter.jsx'
 import AdminUser from './pages/admin/adminUser/adminUser.jsx'
 import AdminArticle from './pages/admin/adminArticle/adminArticle.jsx'
-import AdminEditArt from './pages/admin/adminEditArt/adminEditArt.jsx'
+// import AdminEditArt from './pages/admin/adminEditArt/adminEditArt.jsx'
+// import './interceptors'
 // import AdminUserInfo from './pages/admin/adminUserInfo/adminUserInfo.jsx'
 import UserWrite from './pages/userWrite/UserWrite.jsx'
 import Admin from './Admin.js'
-import './common.less'
 
 // // import Home from './pages/container/home'
 class App extends Component {
@@ -87,7 +86,7 @@ class App extends Component {
                   <Admin>
                     <Switch>
                       <Route path="/admin/user" component={AdminUser} />
-                      <Route path="/admin/article/:aid" component={AdminEditArt} />
+                      {/* <Route path="/admin/article/:aid" component={AdminEditArt} /> */}
                       <Route path="/admin/article" component={AdminArticle} />
                     </Switch>
                   </Admin>

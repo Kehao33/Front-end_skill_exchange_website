@@ -8,7 +8,7 @@ import {
   TagsOutlined,
   UserOutlined,
   DownOutlined,
-  HighlightOutlined,
+  BulbOutlined,
   UserAddOutlined,
   ClusterOutlined,
   ExclamationCircleOutlined,
@@ -110,13 +110,13 @@ class Header extends Component {
     }
     const headerRight = userObj ? (
       <div className="header-right">
-        <div className="write-btn">
-          <NavLink activeClassName="write-ative" to="/user/write">
-            <HighlightOutlined /> &nbsp;创作中心
+        <div className="header-right-item">
+          <NavLink activeClassName="active" to="/user/write">
+            <BulbOutlined />&nbsp;创作中心 &nbsp;
           </NavLink>
         </div>
 
-        <div className="oper-user">
+        <div className="header-right-item oper-user">
           <Link to={`/user/${this.props.userObj._id}`}>
             {userObj && userObj.avatarUrl ? (
               <Avatar src={userObj.avatarUrl} />
@@ -130,7 +130,7 @@ class Header extends Component {
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
             >
-              {userObj && userObj.nickName} &nbsp;&nbsp;
+              {userObj && userObj.nickName} &nbsp;
               <DownOutlined />
             </span>
           </Dropdown>
@@ -138,7 +138,7 @@ class Header extends Component {
       </div>
     ) : (
       <div className="header-right">
-        <div>
+        <div className="header-right-item">
           <UserOutlined />
           &nbsp;
           <NavLink activeClassName="active" to="/login">
@@ -146,7 +146,7 @@ class Header extends Component {
           </NavLink>
         </div>
 
-        <div>
+        <div className="header-right-item">
           <UserAddOutlined />
           &nbsp;
           <NavLink activeClassName="active" to="/register">
@@ -162,26 +162,26 @@ class Header extends Component {
         style={pathNav === '/index' ? { position: 'absolute' } : null}
       >
         <div className="header-left">
-          <div>
+          <div className="header-right-item">
             <NavLink activeClassName="active" to="/index">
-              <img src="/img/logo.png" alt="logo.png" />
+              <img src="/img/logo.png" className="logo" alt="logo.png" />
             </NavLink>
           </div>
-          <div>
+          <div className="header-right-item">
             <SoundOutlined />
             &nbsp;
             <NavLink activeClassName="active" to="/dynamic">
               前端动态
             </NavLink>
           </div>
-          <div>
+          <div className="header-right-item">
             <FolderOpenOutlined />
             &nbsp;
             <NavLink activeClassName="active" to="/resource">
               资源共享
             </NavLink>
           </div>
-          <div>
+          <div className="header-right-item">
             <TagsOutlined />
             &nbsp;
             <NavLink activeClassName="active" to="/algorithm">
@@ -189,7 +189,7 @@ class Header extends Component {
             </NavLink>
           </div>
           {userObj && userObj.userRole === 'admin' ? (
-            <div>
+            <div className="header-right-item">
               <NavLink activeClassName="write-ative" to="/admin">
                 <ClusterOutlined /> &nbsp;后台管理
               </NavLink>

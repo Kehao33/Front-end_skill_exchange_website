@@ -116,7 +116,7 @@ function ArticleList(props) {
       </div>
       <div className="article-content-item">
         <span className="content-item-title">文章名称</span>
-        <span className="content-item-class">包含标签</span>
+        <span className="content-item-title">包含标签</span>
         <span className="content-item-date">发布时间</span>
         {canOpera ? <span className="content-item-opera">文章操作</span> : null}
       </div>
@@ -125,7 +125,7 @@ function ArticleList(props) {
           renderData.map((item) => (
             <div className="article-content-item" key={item && item._id}>
               <span className="content-item-title">
-                <a href={`#/article/${item && item._id}`}>
+                <a href={`/article/${item && item._id}`}>
                   {item && item.title}
                 </a>
               </span>

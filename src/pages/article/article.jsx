@@ -75,6 +75,7 @@ const Article = (props) => {
     setArtLoading(false)
     setArtData(data.showArt)
     setCntData(data.comments)
+    // console.log('data.comments',data.comments)
     data.likeStatus && setShowLike(true)
   }
 
@@ -117,7 +118,22 @@ const Article = (props) => {
                 <div className="article-fl">
                   <a
                     className="author"
-                    href={`/user/${artData && artData.author._id}`}
+                    href={`/user/${
+                      artData && artData.author && artData.author._id
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      if (!userObj) {
+                        confrimFun('查看用户信息')
+                        return
+                      } else {
+                        props.history.push(
+                          `/user/${
+                            artData && artData.author && artData.author._id
+                          }`
+                        )
+                      }
+                    }}
                   >
                     {artData && artData.author.nickName}
                   </a>
@@ -162,7 +178,7 @@ const Article = (props) => {
                     authorId: userObj && userObj._id,
                   }}
                 >
-                  <Form.Item name="content" label="评论">
+                  <Form.Item name="content" className="cmt-box" label="评论">
                     <Input.TextArea
                       placeholder="评论内容.."
                       allowClear
@@ -197,8 +213,14 @@ const Article = (props) => {
                     <List.Item>
                       <List.Item.Meta
                         avatar={
-                          <a href={`/user/${item && item.authorId._id}`}>
-                            {item && item.authorId.avatarUrl ? (
+                          <a
+                            href={`/user/${
+                              item && item.authorId && item.authorId._id
+                            }`}
+                          >
+                            {item &&
+                            item.authorId &&
+                            item.authorId.avatarUrl ? (
                               <Avatar src={item.authorId.avatarUrl} />
                             ) : (
                               <Avatar>U</Avatar>
@@ -206,7 +228,11 @@ const Article = (props) => {
                           </a>
                         }
                         title={
-                          <a href={`/user/${item && item.authorId._id}`}>
+                          <a
+                            href={`/user/${
+                              item && item.authorId && item.authorId._id
+                            }`}
+                          >
                             {item && item.authorId.nickName}
                           </a>
                         }

@@ -3,7 +3,7 @@ import { Row, Col, Card, Avatar, Input, Button, Skeleton, message } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
 import { formatDate } from './../../tools.js'
 
-import './rightConent.less'
+import './resCnt.less'
 const { Search } = Input
 function RightContent(props) {
   const { resource_data, isContentLoading, rTitle } = props
@@ -55,7 +55,6 @@ function RightContent(props) {
         <Card
           key={item._id}
           hoverable
-          style={{ width: 318, height: 278, margin: '24px 18px' }}
         >
           <div className="res-content-header">
             <Row justify="start">

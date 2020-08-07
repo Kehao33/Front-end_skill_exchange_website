@@ -38,7 +38,12 @@ app.use('/user', function (req, res, next) {
   if (req.session.userObj) {
     next()
   } else {
-    return res.json({ data: [], msg: '请查看是否登录，或登录已失效需重新登录', isOk: 0 })
+    return res.json({
+      data: [],
+      needLogin: 1,
+      msg: '请查看是否登录，或登录已失效需重新登录',
+      isOk: 0,
+    })
   }
 })
 app.use('/admin', function (req, res, next) {
@@ -46,7 +51,12 @@ app.use('/admin', function (req, res, next) {
   if (req.session.userObj && req.session.userObj.userRole === 'admin') {
     next()
   } else {
-    return res.json({ data: [], msg: '权限不够或登录已过期需重新登录', isOk: 0 })
+    return res.json({
+      data: [],
+      needLogin: 1,
+      msg: '权限不够或登录已过期需重新登录',
+      isOk: 0,
+    })
   }
 })
 

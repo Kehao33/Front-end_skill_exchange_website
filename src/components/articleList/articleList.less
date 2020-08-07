@@ -5,12 +5,14 @@
 }
 
 .article-content-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   border-bottom: 1px solid #eee;
   font-size: 14px;
   height: 52px;
   font-weight: 16px;
-  display: flex;
-  align-items: center;
+  min-height: 6vh;
 
   .content-item-title {
     width: 35%;
@@ -29,7 +31,11 @@
   }
 
   .content-item-class {
+    display: block;
     width: 30%;
+    height: .48rem;
+    line-height: .48rem;
+    min-height: 3vh;
   }
 
   .content-item-date {

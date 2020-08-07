@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Tabs } from 'antd'
 // import RightContent from './rightContent'
-import RightContent from './../../components/resourceRightCon/rightContent'
+import RightContent from './../../components/resourceRightCon/resCnt'
 import './resource.less'
 import Footer from './../../components/footer/footer.jsx'
 import { reqResource } from './../../requestAPI/operHttp.js'

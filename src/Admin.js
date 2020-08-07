@@ -4,25 +4,19 @@ import {
   Menu,
   Layout,
   Dropdown,
-  Button,
   Modal,
   Form,
   Input,
-  Select,
-  Upload,
   message,
 } from 'antd'
 import {
   FileOutlined,
   UserOutlined,
   DownOutlined,
-  LoadingOutlined,
-  PlusOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons'
 import { connect } from 'react-redux'
 
-import { reqLogOut } from './requestAPI/operHttp'
 
 import { logOutUser, modifyUserPass } from './redux/user.redux'
 import './admin.less'
@@ -137,18 +131,6 @@ class Admin extends Component {
         </Menu.Item>
       </Menu>
     )
-
-    const uploadButton = (
-      <div>
-        {this.state.loading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    )
-    const { imageUrl } = this.state
-
-    const tailLayout = {
-      wrapperCol: { offset: 14, span: 12 },
-    }
 
     const formLayout = {
       labelCol: {

@@ -160,9 +160,7 @@ class Login extends Component {
             </Row>
           </div>
 
-          <div className="login-footer">
-            <Footer />
-          </div>
+          <Footer />
         </div>
       </>
     )

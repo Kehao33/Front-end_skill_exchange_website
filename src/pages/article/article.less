@@ -1,15 +1,13 @@
 .article {
-  min-width: 1000px;
+  width: 100vw;
+  min-width: 39.96rem;
   background-color: #fafafa;
-  padding-top: 10px;
+
+  padding-top: 5vh;
 
   .ant-skeleton {
     width: 80%;
     margin: 0 auto;
-  }
-
-  .ant-empty-image {
-    margin-left: 32px;
   }
 
   .container {
@@ -22,8 +20,8 @@
 
     .article-title {
       font-weight: 700;
-      font-size: 20px;
-      margin-bottom: 8px;
+      font-size: .92rem;
+      margin-bottom: .32rem;
     }
 
     .ant-divider-horizontal {
@@ -32,10 +30,10 @@
 
     .article-info {
       overflow: hidden;
+      font-size: .69rem;
 
 
       .article-fl {
-        // 解决ie6以为浮动产生双边距问题
         float: left;
       }
 
@@ -43,7 +41,7 @@
         float: right;
 
         .mr {
-          margin-right: 8px;
+          margin-right: .32rem;
 
           &:hover {
             cursor: pointer;
@@ -54,25 +52,65 @@
 
 
 
-    p {
-      text-indent: 2em;
-      font-size: 16px;
-    }
+  
 
 
     .article-content {
-      margin: 20px auto;
+      margin: .8rem auto;
+      font-size: .72rem;
 
-      code {
-        display: block;
-        background-color: #f5f5f0;
-        padding: 11px;
-        width: 100%;
-      }
+     /*对 markdown 样式的补充*/
+    pre {
+      display: block;
+      padding: .4rem;
+      margin: 0 0 .4rem;
+      font-size: .56rem;
+      line-height: 1.42857143;
+      color: #abb2bf;
+      background: #282c34;
+      word-break: break-all;
+      word-wrap: break-word;
+      overflow: auto;
+    }
+    h1,h2,h3,h4,h5,h6{
+      margin-top: 1em;
+      /* margin-bottom: 1em; */
+    }
+    h1{
+      font-size: 1.2rem;
+    }
+    
+    h2{
+      font-size: 1rem;
+    }
+    h3{
+      font-size: .9rem;
+    }
+    h4{
+      font-size: .85rem;
+    }
+    h5{
+      font-size: .8rem;
+    }
+    h6{
+      font-size: .78rem;
+    }
+    strong {
+      font-weight: bold;
+    }
 
-      img {
-        max-width: 100%;
-      }
+    p > code:not([class]) {
+      padding: 2px 4px;
+      font-size: .64rem;
+      color: #c7254e;
+      background-color: #f9f2f4;
+      border-radius: 4px;
+    }
+    p img{
+      /* 图片居中 */
+      margin: 0 auto;
+      display: flex;
+    }
 
     }
   }
@@ -82,13 +120,20 @@
     .comment-form {
       position: relative;
       min-height: 148px;
+      margin: 4vh auto 7vh;
 
       .cmt-btn {
         position: absolute;
-        right: 8px;
-        bottom: -52px;
+        right: .32rem;
+        top: 2.8rem;
+      }
+
+      .cmt-box {
+        height: 3vh;
+
       }
     }
+
 
   }
 }

@@ -3,7 +3,7 @@ import { Tabs } from 'antd'
 import './algorithm.less'
 import Footer from './../../components/footer/footer.jsx'
 
-import AlgoRightCon from './../../components/algoRightCon/algoRightConClass.js'
+import AlgoRightCon from './../../components/algoRightCon/algoRightConClass.jsx'
 
 const { TabPane } = Tabs
 class Resource extends Component {

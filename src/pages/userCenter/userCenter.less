@@ -1,52 +1,54 @@
 .user-center {
   width: 100%;
   display: flex;
-  // position: relative;
-  padding: 20px 28px 0px;
+  min-height: 30rem;
+  padding: .8rem 1.12rem 0;
 
 
   .left {
     width: 76%;
-    min-height: 400px;
-    padding: 10px 30px 30px;
+    min-height: 16rem;
+    padding: .4rem 1.2rem 1.2rem;
     background-color: #fbfbfb;
     text-align: left;
 
     .left-title {
       font-weight: 600;
-      font-size: 25px;
+      font-size: 1rem;
       color: #000;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      margin-bottom: 8px;
+      margin-bottom: .32rem;
     }
 
     .article-class-nav {
       width: 100%;
       display: flex;
-      height: 60px;
+      height: 2.4rem;
       align-items: center;
       justify-content: space-around;
-      border-top: 1px solid #eee;
+      border-top: .04rem solid #eee;
       border-bottom: 1px solid #eee;
-      margin-bottom: 20px;
+      margin-bottom: .8rem;
+
+      .active-nav {
+        color: #1890ff;
+        font-size: .72rem;
+      }
 
       .art-nav {
-        font-size: 18px;
         color: #000;
-        font-weight: 500;
+        font-size: .72rem;
 
         &:hover {
           cursor: pointer;
           color: #1890ff;
+          font-size: .72rem;
         }
       }
 
-      .active-nav {
-        font-weight: 700;
-        color: #1890ff;
-      }
+     
 
     }
 
@@ -63,33 +65,33 @@
     // position: absolute;
     // top: 10px;
     // right: 8px;
-    margin-left: 20px;
+    margin-left: .8rem;
     width: 24%;
-    max-height: 400px;
-    padding: 10px 10px 2px;
+    max-height: 16rem;
+    padding: .4rem .4rem 2px;
     // outline: 6px solid #8A2BE2;
     // min-height: 432px;
     // background-color: #fafafa;
 
     .user-info-item {
       border-bottom: 1px solid #eee;
-      // min-height: 52px;
-      font-size: 14px;
+      min-height: 5vh;
+      font-size: .56rem;
     }
 
     .personal-avatar {
       display: flex;
-      padding: 8px 0;
+      padding: .32rem 0;
       line-height: normal;
 
       .nickname-sign {
         position: relative;
-        margin-left: 6px;
+        margin-left: .24rem;
 
         .nickname {
-          font-size: 16px;
+          font-size: .64rem;
           font-weight: 600;
-          margin-right: 24px;
+          margin-right: .96rem;
         }
 
         div {
@@ -99,19 +101,23 @@
     }
 
     .personal-achieve {
-      line-height: normal;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      height: 66px;
+      overflow: hidden;
+      min-height: 7vh;
+      height: 2.64rem;
 
       .achieve-item {
         display: flex;
         flex-direction: column;
-        font-size: 16px;
-        line-height: 25px;
+        font-size: .64rem;
+        line-height: 1rem;
         align-items: center;
-
+        
+        .achieve {
+          min-height: 2vh;
+        }
         .achieve-item-value {
           font-weight: 700;
         }
@@ -120,7 +126,7 @@
 
     .personal-firm,
     .personal-contact {
-      line-height: 52px;
+      line-height: 2.08rem;
     }
 
 
@@ -130,8 +136,9 @@
     // }
 
     .personal-brief {
-      padding-top: 12px;
+      padding-top: .48rem;
       border: none;
+
 
       p {
         text-indent: 2em;
