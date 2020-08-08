@@ -103,6 +103,7 @@ class UserCenter extends Component {
 
   async getArtByUserId() {
     const { data } = await reqArtByUid({ id: this.requeryId })
+    console.log('data.data',data.data)
 
     if (data.isOk) {
       this.setState({

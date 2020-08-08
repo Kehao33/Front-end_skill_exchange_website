@@ -29,7 +29,7 @@ React.js + Ant Design + MongoDB + Redux
 
 
 ###  预览效果图：
-  你需要访问：https://quankehao.gitee.io/qstation-view
+  你需要访问：https://quankehao.gitee.io/qstationview/
   有点丑,阁下请见谅。
 
 ![](C:\Users\jake\Desktop\img\jianli1.png)

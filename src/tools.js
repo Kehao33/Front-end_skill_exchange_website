@@ -1,7 +1,7 @@
 // 这里用于写一些常见的 工具操作函数
 // store主要用来实现localStorage保存数据持久化，并且兼容性所有浏览器
-// import localStore from 'store'
-import store from 'store2'
+import localStore from 'store'
+// import store from 'store2'
 import axios from 'axios'
 import { message } from 'antd'
 
@@ -18,38 +18,38 @@ var memoryUser = {
 // 以下对象用来操作用户信息，实现持久化
 const USER_INFO = 'USER_INFO'
 
-var operUser = {
-  // 保存 用户的基本信息
-  saveUser(userObj) {
-    store.session(USER_INFO, userObj)
-  },
-
-  // 获取 用户的基本信息
-  getUser() {
-    return store.session.get(USER_INFO)
-  },
-
-  // 移除用户， 删除用户基本信息
-  removeUser() {
-    store.session.remove(USER_INFO)
-  },
-}
 // var operUser = {
 //   // 保存 用户的基本信息
 //   saveUser(userObj) {
-//     localStore.set(USER_INFO, userObj)
+//     store.session(USER_INFO, userObj)
 //   },
 
 //   // 获取 用户的基本信息
 //   getUser() {
-//     return localStore.get(USER_INFO)
+//     return store.session.get(USER_INFO)
 //   },
 
 //   // 移除用户， 删除用户基本信息
 //   removeUser() {
-//     localStore.remove(USER_INFO)
+//     store.session.remove(USER_INFO)
 //   },
 // }
+var operUser = {
+  // 保存 用户的基本信息
+  saveUser(userObj) {
+    localStore.set(USER_INFO, userObj)
+  },
+
+  // 获取 用户的基本信息
+  getUser() {
+    return localStore.get(USER_INFO)
+  },
+
+  // 移除用户， 删除用户基本信息
+  removeUser() {
+    localStore.remove(USER_INFO)
+  },
+}
 
 function getRedirectPath(loginUser, isRegisterOrLogout) {
   // 如果在注册成功，或者是退出登录， 则跳转到登录页面
