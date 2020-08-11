@@ -15,6 +15,7 @@ const REGISTER_SUCCESS = 'REGISTER_SUCCESS' // 注册成功
 const USER_LOGOUT = 'USER_LOGOUT' //用户退出
 const ERROR_MSG = 'ERROR_MSG' //错误处理
 const MODIFY_USERPASS = 'MODIFY_USERPASS' // 修改用户密码成功
+const REMOVE_USERINFO = 'REMOVE_USERINFO' // 清空用户信息
 let userRole = '' // 根据用户角色来实现注册成功和登录成功的页面跳转
 let isRegisterOrLogout = false
 
@@ -22,6 +23,7 @@ const initState = {
   redirectTo: '',
   userObj: operUser.getUser(),
   errBroadcast: '', //错误消息广播
+  isAuth: '',
 }
 
 export function user(state = initState, action) {
@@ -44,6 +46,8 @@ export function user(state = initState, action) {
       return { ...state, ...action.payload }
     case MODIFY_USERPASS:
       return { ...state, ...action.payload }
+    // case REMOVE_USERINFO:
+    //   return { ...state, userObj:action.payload.userObj }
     case ERROR_MSG:
       return { ...state, isAuth: false, errBroadcast: action.msg }
     default:
@@ -69,6 +73,17 @@ function registerSuccess(obj) {
 function loginSuccess(loginfo) {
   return { type: LOGIN_SUCCESS, payload: loginfo }
 }
+// // 移除用户信息 creater
+// function removeUser(userinfo) {
+//   return { type: REMOVE_USERINFO, payload: userinfo }
+// }
+// // 移除用户信息
+// export function doRemoveUser() {
+//   return async (dispatch) => {
+//     operUser.removeUser()
+//     dispatch(removeUser({ userObj: null }))
+//   }
+// }
 // 用户注册使用
 export function register(userObj) {
   const { nickName, userEmail, userPwd, confirmPwd } = userObj
@@ -83,7 +98,7 @@ export function register(userObj) {
       // 如果后台操作成功，则派发一个action
       userRole = ''
       isRegisterOrLogout = true
-      message.success('注册成功, 跳转到登录页面...')
+      message.success('注册成功, 正跳转到登录页面...')
       dispatch(
         registerSuccess({
           isAuth: true,

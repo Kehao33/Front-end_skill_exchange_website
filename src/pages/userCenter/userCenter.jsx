@@ -104,7 +104,7 @@ class UserCenter extends Component {
   async getArtByUserId() {
     const { data } = await reqArtByUid({ id: this.requeryId })
 
-    if (data.isOk) {
+    if (data && data.isOk) {
       this.setState({
         renderData: data.data,
       })
@@ -131,7 +131,7 @@ class UserCenter extends Component {
         })
       }
     } else {
-      message.error('获取信息失败，请查看操作是否正确')
+      message.error(data && data.msg)
     }
 
     const { userObj } = this.props
@@ -158,7 +158,12 @@ class UserCenter extends Component {
   // 实现获取用户信息
   async getUserByUid(id) {
     const { data } = await reqUserByUid({ id }, 'GET')
-    console.log('data.data[0]',data)
+    // if(data&&data.needLogin){
+    //   message.error('你的登录信息已过期，退出重新登录')
+    //   this.props.history.replace('/login')
+    //   return ;
+    // }
+
     this.setState({
       renderUser: data.data[0],
       // imageUrl: data.data[0].avatarUrl,
