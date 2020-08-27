@@ -20,7 +20,7 @@ const articleSchema = new mongoose.Schema({
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User',  // 关联User
     required: [true, '文章作者不能为空'],
   },
   publishDate: {

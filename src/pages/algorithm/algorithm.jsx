@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
-import { Tabs } from 'antd'
-import './algorithm.less'
-import Footer from './../../components/footer/footer.jsx'
+import React, { Component } from 'react';
+import { Tabs } from 'antd';
+import './algorithm.less';
+import Footer from './../../components/footer/footer.jsx';
 
-import AlgoRightCon from './../../components/algoRightCon/algoRightConClass.jsx'
+import AlgoRightCon from './../../components/algoRightCon/algoRightConClass.jsx';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 class Resource extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.changeTablePane = this.changeTablePane.bind(this)
+    this.changeTablePane = this.changeTablePane.bind(this);
   }
 
   // 点击tablePane的时候触发改函数
   changeTablePane(key) {
-    console.log('tablepane key: ', key)
+    // console.log('tablepane key: ', key)
   }
 
   render() {
@@ -62,8 +62,8 @@ class Resource extends Component {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-export default Resource
+export default Resource;

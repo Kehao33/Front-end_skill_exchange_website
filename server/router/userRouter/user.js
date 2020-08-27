@@ -146,7 +146,6 @@ uRouter.post('/pic-write', async function (req, res) {
     multiples: true,
     uploadDir: path.join(__dirname, './../../../public/uploads/articlePic'),
   })
-  console.log('pic-write','dadad')
   form.parse(req, (err, fields, files) => {
     if (err)
       return res

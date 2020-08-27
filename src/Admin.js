@@ -179,6 +179,7 @@ class Admin extends Component {
             </Menu.Item>
           </Menu>
         </Sider>
+
         <Layout>
           <Header style={{ padding: 0 }}>
             <span
@@ -301,7 +302,6 @@ class Admin extends Component {
                     if (!value || getFieldValue('userPwd') === value) {
                       return Promise.resolve()
                     }
-
                     return Promise.reject('请确保两次密码输入一致!')
                   },
                 }),

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   List,
   Avatar,
@@ -8,28 +8,28 @@ import {
   Divider,
   message,
   Button,
-} from 'antd'
-import { MessageOutlined, LikeOutlined, EyeOutlined } from '@ant-design/icons'
-import './dynamic.less'
+} from 'antd';
+import { MessageOutlined, LikeOutlined, EyeOutlined } from '@ant-design/icons';
+import './dynamic.less';
 
-import Footer from './../../components/footer/footer.jsx'
+import Footer from './../../components/footer/footer.jsx';
 import {
   reqDynamic,
   reqHotArt,
   reqCarArt,
-} from './../../requestAPI/operHttp.js'
+} from './../../requestAPI/operHttp.js';
 // 请求文章的跳过的条数
 // let count = 0
 // 动态标签展示数据
-let setArr = new Set()
+let setArr = new Set();
 class Dynamic extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     // 热门文章的数据
-    this.hotArtData = []
-    this.count = 0
-    this.getCarouselData = this.getCarouselData.bind(this)
-    this.getHotData = this.getHotData.bind(this)
+    this.hotArtData = [];
+    this.count = 0;
+    this.getCarouselData = this.getCarouselData.bind(this);
+    this.getHotData = this.getHotData.bind(this);
 
     this.state = {
       showBtn: true,
@@ -38,58 +38,58 @@ class Dynamic extends Component {
       list: [],
       hotArtData: [],
       carArtData: [],
-    }
+    };
   }
 
   // 得到轮播图的文章信息
   async getCarouselData() {
-    let carNumber = 4
-    this.setState({ loading: true })
-    var { data } = await reqCarArt({ carcount: carNumber })
-    this.setState({ carArtData: data.data })
-    this.setState({ loading: false })
+    let carNumber = 4;
+    this.setState({ loading: true });
+    var { data } = await reqCarArt({ carcount: carNumber });
+    this.setState({ carArtData: data.data });
+    this.setState({ loading: false });
   }
   async getHotData() {
-    let hotNumber = 4
+    let hotNumber = 4;
     // 请求热门文章
-    const { data } = await reqHotArt({ hotcount: hotNumber })
-    this.setState({ hotArtData: data.data })
+    const { data } = await reqHotArt({ hotcount: hotNumber });
+    this.setState({ hotArtData: data.data });
   }
   componentDidMount() {
-    this.getHotData()
-    this.getCarouselData()
+    this.getHotData();
+    this.getCarouselData();
     this.getLeftData((res) => {
       this.setState({
         initLoading: false,
         list: res.data,
         contentLoading: false,
-      })
-    })
+      });
+    });
   }
 
   getLeftData = async (callback) => {
-    const { data } = await reqDynamic({ count: this.count })
+    const { data } = await reqDynamic({ count: this.count });
     // 获取跑马灯下的文章列表
     if (data.data.length === 0) {
-      message.warning('已加载完所有数据')
+      message.warning('已加载完所有数据');
       this.setState({
         contentLoading: false,
         initListLoading: false,
         showBtn: false,
-      })
-      return 0
+      });
+      return 0;
     } else {
-      this.setState({ shwoBtn: true })
-      callback(data)
+      this.setState({ shwoBtn: true });
+      callback(data);
     }
-    this.count += 4
-    callback(data)
-  }
+    this.count += 4;
+    callback(data);
+  };
 
   onLoadMore = () => {
     this.setState({
       contentLoading: true,
-    })
+    });
     this.getLeftData((res) => {
       this.setState(
         {
@@ -97,11 +97,11 @@ class Dynamic extends Component {
           contentLoading: false,
         },
         () => {
-          window.dispatchEvent(new Event('resize'))
+          window.dispatchEvent(new Event('resize'));
         }
-      )
-    })
-  }
+      );
+    });
+  };
 
   render() {
     const {
@@ -111,11 +111,11 @@ class Dynamic extends Component {
       carArtData,
       list,
       hotArtData,
-    } = this.state
+    } = this.state;
     // 将动态标签去重后添加到页面上
     list.forEach((item) => {
-      item.artTags && setArr.add(...item.artTags.split(','))
-    })
+      item.artTags && setArr.add(...item.artTags.split(','));
+    });
 
     // 加载更多
     const loadMore = showBtn ? (
@@ -138,16 +138,15 @@ class Dynamic extends Component {
           加载更多
         </Button>
       </div>
-    ) : null
+    ) : null;
 
     const IconText = ({ icon, text }) => (
       <span>
         {React.createElement(icon, { style: { marginRight: 3 } })}
         {text}
       </span>
-    )
+    );
 
-    console.log('list', list)
     return (
       <div className="dynamic-wrap">
         <div className="dynamic">
@@ -175,11 +174,14 @@ class Dynamic extends Component {
                   <List.Item
                     actions={[
                       <Link
-                        to={`/user/${item.author._id}`}
+                        to={`/user/${item.author&&item.author._id}`}
                         className="u-center"
                       >
-                        <Avatar src={item && item.author.avatarUrl} />
-                        &nbsp;&nbsp;{item && item.author.nickName}
+                        <Avatar
+                          src={item && item.author && item.author.avatarUrl}
+                        />
+                        &nbsp;&nbsp;
+                        {item && item.author && item.author.nickName}
                       </Link>,
                       <IconText
                         icon={EyeOutlined}
@@ -207,7 +209,7 @@ class Dynamic extends Component {
                         title={
                           <a
                             className="article-title"
-                            href={`/article/${item._id}`}
+                            href={`/article/${item._id && item._id}`}
                             rel="noopener noreferrer"
                             target="_blank"
                           >
@@ -217,8 +219,8 @@ class Dynamic extends Component {
                       />
                       <a
                         className="article-content"
-                        href={`/article/${item._id}`}
-                        target='_blank'
+                        href={`/article/${item._id && item._id}`}
+                        target="_blank"
                         rel="noopener noreferrer"
                       >
                         {item &&
@@ -235,7 +237,7 @@ class Dynamic extends Component {
           <div className="dynamic-right">
             <div className="label">
               <Divider orientation="left">动态标签</Divider>
-              <Button ghost  style={{ margin: 5 }}>
+              <Button ghost style={{ margin: 5 }}>
                 推荐
               </Button>
               {/* 在此遍历生成标签 */}
@@ -258,11 +260,13 @@ class Dynamic extends Component {
                         key={item.title}
                         actions={[
                           <Link
-                            to={`/user/${item.author._id}`}
+                            to={`/user/${item.author && item.author._id}`}
                             className="u-center"
                           >
-                            <Avatar src={item && item.author.avatarUrl} />
-                            &nbsp;&nbsp;{item.author.nickName}
+                            <Avatar
+                              src={item && item.author && item.author.avatarUrl}
+                            />
+                            &nbsp;&nbsp;{item.author && item.author.nickName}
                           </Link>,
                           <IconText
                             icon={EyeOutlined}
@@ -298,8 +302,8 @@ class Dynamic extends Component {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-export default Dynamic
+export default Dynamic;

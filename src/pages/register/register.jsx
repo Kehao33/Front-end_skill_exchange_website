@@ -1,39 +1,43 @@
-import React, { Component, createRef } from 'react'
-import { Form, Input, Card, Button, Row, Col } from 'antd'
-import { UserAddOutlined } from '@ant-design/icons'
+import React, { Component, createRef } from 'react';
+import { Form, Input, Card, Button, Row, Col } from 'antd';
+import { UserAddOutlined } from '@ant-design/icons';
 // 获取register中的register方法
-import { Redirect } from 'react-router-dom'
-import { register } from '../../redux/user.redux.js'
-import { connect } from 'react-redux'
-import { reqGetCaptcha } from './../../requestAPI/operHttp'
-import Footer from './../../components/footer/footer.jsx'
-import './register.less'
+import { Redirect } from 'react-router-dom';
+import { register } from '../../redux/user.redux.js';
+import { connect } from 'react-redux';
+import { reqGetCaptcha } from './../../requestAPI/operHttp';
+import Footer from './../../components/footer/footer.jsx';
+import { throttle } from './../../tools.js';
+import './register.less';
 
 @connect((state) => state.user, { register })
 class Register extends Component {
   constructor(props) {
-    super(props)
-    this.captchaRef = createRef()
+    super(props);
+    this.captchaRef = createRef();
+    this.throttle_submit = this.throttle_submit.bind(this);
+  }
+  
+  throttle_submit = (formData) => {
+    const { history, register, isAuth } = this.props;
+    register(formData);
+    if (isAuth) {
+      history.push('/login');
+    }
   }
 
   // 表单提交的时候自动触发的事件，values是表单内容对象
-  onFinish = (formData) => {
-    const { history, register, isAuth } = this.props
-    register(formData)
-    if (isAuth) {
-      history.replace('/login')
-    }
-  }
+  onFinish = throttle(this.throttle_submit, 1000);
 
   // this.refs.captchaRef.current.src = `http://localhost:3000/public/captcha`
 
   getCaptcha = () => {
     const timer = setTimeout(async () => {
-      await reqGetCaptcha({ time: Date.now() })
-      this.captchaRef.current.src = `/public/captcha?time=${Date.now()}`
-      clearTimeout(timer)
-    }, 300)
-  }
+      await reqGetCaptcha({ time: Date.now() });
+      this.captchaRef.current.src = `/public/captcha?time=${Date.now()}`;
+      clearTimeout(timer);
+    }, 300);
+  };
 
   render() {
     const formItemLayout = {
@@ -55,7 +59,7 @@ class Register extends Component {
           span: 20,
         },
       },
-    }
+    };
     const tailFormItemLayout = {
       wrapperCol: {
         xs: {
@@ -67,10 +71,10 @@ class Register extends Component {
           offset: 1,
         },
       },
-    }
-    const { isAuth, redirectTo } = this.props
+    };
+    const { isAuth, redirectTo } = this.props;
     if (isAuth && redirectTo === '/login') {
-      return <Redirect to="/login" />
+      return <Redirect to="/login" />;
     }
 
     const regCom = (
@@ -101,10 +105,7 @@ class Register extends Component {
                   },
                 ]}
               >
-                <Input
-                  style={{ width: '100%' }}
-                  placeholder="请填写您可爱的昵称哦"
-                />
+                <Input placeholder="请填写您可爱的昵称哦" />
               </Form.Item>
 
               <Form.Item
@@ -121,10 +122,7 @@ class Register extends Component {
                   },
                 ]}
               >
-                <Input
-                  style={{ width: '100%' }}
-                  placeholder="这也是您的登录账号"
-                />
+                <Input placeholder="这也是您的登录账号" />
               </Form.Item>
 
               <Form.Item
@@ -133,7 +131,6 @@ class Register extends Component {
                 rules={[
                   {
                     required: true,
-                    min: 6,
                     message: '请输入您的密码!',
                   },
                   {
@@ -146,7 +143,7 @@ class Register extends Component {
                 hasFeedback
               >
                 <Input.Password
-                  style={{ width: '100%', height: 100 }}
+               
                   placeholder="请填写登录密码"
                 />
               </Form.Item>
@@ -170,16 +167,16 @@ class Register extends Component {
                   ({ getFieldValue }) => ({
                     validator(rule, value) {
                       if (!value || getFieldValue('userPwd') === value) {
-                        return Promise.resolve()
+                        return Promise.resolve();
                       }
 
-                      return Promise.reject('请确保两次密码输入一致!')
+                      return Promise.reject('请确保两次密码输入一致!');
                     },
                   }),
                 ]}
               >
                 <Input.Password
-                  style={{ width: '100%', height: 100 }}
+               
                   placeholder="请再次确认登录密码"
                 />
               </Form.Item>
@@ -204,10 +201,7 @@ class Register extends Component {
                         },
                       ]}
                     >
-                      <Input
-                        style={{ width: '100%' }}
-                        placeholder="点击图片可刷新验证码"
-                      />
+                      <Input placeholder="点击图片可刷新验证码" />
                     </Form.Item>
                   </Col>
                   <Col span={6}>
@@ -299,17 +293,17 @@ class Register extends Component {
 
         {/* </div> */}
       </>
-    )
+    );
 
     return (
       <>
         <div className="register">{regCom}</div> <Footer />
       </>
-    )
+    );
   }
 }
 
-export default Register
+export default Register;
 
 // import React, { Component, createRef } from 'react'
 // import { Form, Input, Card, Button, Row, Col, message } from 'antd'

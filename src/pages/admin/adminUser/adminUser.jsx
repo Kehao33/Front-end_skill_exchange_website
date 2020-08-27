@@ -63,7 +63,7 @@ function AdminUser(props) {
             <Popconfirm
               cancelText="取消"
               okText="确定"
-              title="确定永久删除吗?"
+              title="数据不可修复，确定永久删除吗?"
               onConfirm={() => handleDelete(record._id)}
             >
               <DeleteOutlined style={{ color: '#f00', fontSize: 16 }} />

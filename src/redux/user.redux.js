@@ -15,7 +15,7 @@ const REGISTER_SUCCESS = 'REGISTER_SUCCESS' // 注册成功
 const USER_LOGOUT = 'USER_LOGOUT' //用户退出
 const ERROR_MSG = 'ERROR_MSG' //错误处理
 const MODIFY_USERPASS = 'MODIFY_USERPASS' // 修改用户密码成功
-const REMOVE_USERINFO = 'REMOVE_USERINFO' // 清空用户信息
+// const REMOVE_USERINFO = 'REMOVE_USERINFO' // 清空用户信息
 let userRole = '' // 根据用户角色来实现注册成功和登录成功的页面跳转
 let isRegisterOrLogout = false
 

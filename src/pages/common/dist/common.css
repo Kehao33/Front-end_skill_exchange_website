@@ -1,7 +1,6 @@
 body {
   word-wrap: break-word;
 }
-
 body,
 div,
 dl,
@@ -19,23 +18,19 @@ h6 {
   margin: 0;
   padding: 0;
 }
-
 a {
   text-decoration: none;
 }
 body {
   min-width: 1000px;
 }
-
-@baseColor: '';
-
 .ant-input-affix-wrapper,
 .ant-btn-primary,
 .min-hgt,
-.ant-btn{
-min-height: 4vh;
+.ant-btn {
+  min-height: 4vh;
 }
-.ant-list-item-meta{
+.ant-list-item-meta {
   min-height: 2vh;
 }
 .ant-list-item {
@@ -43,16 +38,9 @@ min-height: 4vh;
   align-items: initial;
   min-height: 16vh;
 }
-
-
-
-
-.ant-tabs .ant-tabs-left-bar{
+.ant-tabs .ant-tabs-left-bar {
   min-width: 8vw;
 }
-
-
-
 .for-container {
   min-height: 2vh;
 }

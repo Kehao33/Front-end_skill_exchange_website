@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { Row, Col, Tabs } from 'antd'
+import React, { Component } from 'react';
+import { Row, Col, Tabs } from 'antd';
 // import RightContent from './rightContent'
-import RightContent from './../../components/resourceRightCon/resCnt'
-import './resource.less'
-import Footer from './../../components/footer/footer.jsx'
-import { reqResource } from './../../requestAPI/operHttp.js'
+import RightContent from './../../components/resourceRightCon/resCnt';
+import './resource.less';
+import Footer from './../../components/footer/footer.jsx';
+import { reqResource } from './../../requestAPI/operHttp.js';
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 class Resource extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isSearch: false,
       allData: [], //请求到的所有数据
@@ -18,17 +18,19 @@ class Resource extends Component {
       bookData: [],
       softData: [],
       otherData: [],
-    }
-    this.changeTablePane = this.changeTablePane.bind(this) // 视频教程的数据 // 电子书籍的数据 // 好用软件的数据 // 其他资源的数据
+    };
+    this.changeTablePane = this.changeTablePane.bind(this); // 视频教程的数据 // 电子书籍的数据 // 好用软件的数据 // 其他资源的数据
   }
 
   changeTablePane(key) {
-    console.log(key)
+    console.log(key);
   }
 
   async componentDidMount() {
-    const { data } = await reqResource()
-    data.data.forEach((item) => (item['href'] = '/article/' + item._id))
+    const { data } = await reqResource();
+    data.data.forEach(
+      (item) => (item['href'] = '/article/' + item && item._id)
+    );
     this.setState({
       allData: data.data,
       videoData: data.data.filter(
@@ -44,7 +46,7 @@ class Resource extends Component {
         (item) => item.artType.search(/其他/g) !== -1
       ),
       isContentLoading: false,
-    })
+    });
   }
 
   render() {
@@ -55,7 +57,7 @@ class Resource extends Component {
       softData,
       otherData,
       isContentLoading,
-    } = this.state
+    } = this.state;
 
     return (
       <div className="resource">
@@ -171,8 +173,8 @@ class Resource extends Component {
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-export default Resource
+export default Resource;

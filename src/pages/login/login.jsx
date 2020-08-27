@@ -1,37 +1,41 @@
-import React, { Component, createRef } from 'react'
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd'
-import { UserOutlined, LockOutlined, SendOutlined } from '@ant-design/icons'
-import { reqLoginCaptcha } from './../../requestAPI/operHttp.js'
-import Footer from './../../components/footer/footer.jsx'
-import { Redirect } from 'react-router-dom'
-import { login } from './../../redux/user.redux.js'
-import { connect } from 'react-redux'
-import './login.less'
+import React, { Component, createRef } from 'react';
+import { connect } from 'react-redux';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined, SendOutlined } from '@ant-design/icons';
+import { reqLoginCaptcha } from './../../requestAPI/operHttp.js';
+import Footer from './../../components/footer/footer.jsx';
+import { Redirect } from 'react-router-dom';
+import { login } from './../../redux/user.redux.js';
+import { throttle } from './../../tools.js';
+import './login.less';
 
 // 这个将redux和react组件相互连接，所以login可以通过this.props.login来访问
 // @connect((state) => state.user, { login })
 class Login extends Component {
   // 提交登录信息触发
-  captcha = ''
-  loginCaptcha = createRef()
-  onFinish = async (loginForm) => {
-    this.props.login(loginForm)
-  }
+  captcha = '';
+  loginCaptcha = createRef();
+
+  throttle_submit = (loginForm) => {
+    this.props.login(loginForm);
+  };
+  // 节流，防止恶意点击
+  onFinish = throttle(this.throttle_submit, 1000);
 
   getLoginCaptcha = () => {
     var timer = setTimeout(async () => {
-      console.log('是否执行')
-      let data = await reqLoginCaptcha({ time: Date.now() })
+      // console.log('是否执行');
+      let data = await reqLoginCaptcha({ time: Date.now() });
       // 需要进行动态的更新数据才行
-      this.loginCaptcha.current.src = data.config.url + '?time=' + Date.now()
-      clearTimeout(timer)
-    }, 300)
-  }
+      this.loginCaptcha.current.src = data.config.url + '?time=' + Date.now();
+      clearTimeout(timer);
+    }, 300);
+  };
 
   render() {
-    const { redirectTo, userObj } = this.props
+    const { redirectTo, userObj } = this.props;
     if (redirectTo && userObj) {
-      return <Redirect to={redirectTo} />
+      return <Redirect to={redirectTo} />;
     }
     const loginFromOut = {
       xs: {
@@ -40,7 +44,7 @@ class Login extends Component {
       sm: {
         span: 24,
       },
-    }
+    };
 
     return (
       <>
@@ -163,9 +167,9 @@ class Login extends Component {
           <Footer />
         </div>
       </>
-    )
+    );
   }
 }
 
 // export default Login
-export default connect((state) => state.user, { login })(Login)
+export default connect((state) => state.user, { login })(Login);

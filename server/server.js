@@ -32,33 +32,43 @@ app.use(
 // 开放静态资源文件
 app.use(express.static(path.join(__dirname, '../public')))
 
+//  允许跨域访问服务器
+app.all('*',(req,res,next)=>{
+  res.header('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods','*');
+  res.header('Content-type','application/json;charset=utf-8')
+  next();
+})
+
+
 // 做请求拦截
-app.use('/user', function (req, res, next) {
-  // 如果session上存在userObj，且用户角色为userRole那么就可以访问admin路由,反之
-  if (req.session.userObj) {
-    next()
-  } else {
-    return res.json({
-      data: [],
-      needLogin: 1,
-      msg: '请查看是否登录，或登录已失效需重新登录',
-      isOk: 0,
-    })
-  }
-})
-app.use('/admin', function (req, res, next) {
-  // 如果session上存在userObj，且用户角色为userRole那么就可以访问admin路由,反之
-  if (req.session.userObj && req.session.userObj.userRole === 'admin') {
-    next()
-  } else {
-    return res.json({
-      data: [],
-      needLogin: 1,
-      msg: '权限不够或登录已过期需重新登录',
-      isOk: 0,
-    })
-  }
-})
+// app.use('/user', function (req, res, next) {
+//   // 如果session上存在userObj，且用户角色为userRole那么就可以访问admin路由,反之
+//   if (req.session.userObj) {
+//     next()
+//   } else {
+//     return res.json({
+//       data: [],
+//       needLogin: 1,
+//       msg: '请查看是否登录，或登录已失效需重新登录',
+//       isOk: 0,
+//     })
+//   }
+// })
+// app.use('/admin', function (req, res, next) {
+//   // 如果session上存在userObj，且用户角色为userRole那么就可以访问admin路由,反之
+//   if (req.session.userObj && req.session.userObj.userRole === 'admin') {
+//     next()
+//   } else {
+//     return res.json({
+//       data: [],
+//       needLogin: 1,
+//       msg: '权限不够或登录已过期需重新登录',
+//       isOk: 0,
+//     })
+//   }
+// })
 
 app.use('/public', pubRouter) // 公共路由
 app.use('/user', userRouter)

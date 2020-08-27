@@ -115,7 +115,7 @@ class Header extends Component {
         </div>
 
         <div className="header-right-item oper-user">
-          <Link to={`/user/${this.props.userObj._id}`}>
+          <Link to={`/user/${userObj._id}`}>
             {userObj && userObj.avatarUrl ? (
               <Avatar src={userObj.avatarUrl} />
             ) : (
