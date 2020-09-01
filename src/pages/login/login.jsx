@@ -24,7 +24,6 @@ class Login extends Component {
 
   getLoginCaptcha = () => {
     var timer = setTimeout(async () => {
-      // console.log('是否执行');
       let data = await reqLoginCaptcha({ time: Date.now() });
       // 需要进行动态的更新数据才行
       this.loginCaptcha.current.src = data.config.url + '?time=' + Date.now();

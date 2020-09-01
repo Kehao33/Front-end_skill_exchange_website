@@ -118,7 +118,7 @@ class Admin extends Component {
               this.props.history.push(`/user/${this.props.userObj._id}`)
             }
           >
-            个人中心
+            个人中心/普通模式
           </span>
         </Menu.Item>
         <Menu.Item>

@@ -1,9 +1,11 @@
+@baseColor: #1890ff;
+
 .dynamic {
   width: 100%;
   min-height: 28.24rem;
-  min-width: 40rem;
   padding-top: .8rem;
   display: flex;
+  overflow: hidden;
 
 
   .ant-list-item-action {
@@ -87,7 +89,7 @@
         color: #000;
 
         &:hover {
-          color: #1890ff
+          color: @baseColor;
         }
       }
 
@@ -102,10 +104,10 @@
       }
 
       .loading-more-button {
-        border-color: #1890ff;
+        border-color: @baseColor;;
       }
 
-   
+
     }
   }
 
@@ -126,14 +128,14 @@
 
       .ant-btn:hover {
         cursor: pointer;
-        color: #1890ff;
-        border: 1px solid #1890ff;
+        color: @baseColor;;
+        border: 1px solid @baseColor;;
       }
 
       // 当点击了标签后，添加对应的样式
       .articleActive {
-        border: 1px solid #1890ff ;
-        color: #1890ff ;
+        border: 1px solid @baseColor;;
+        color: @baseColor;;
       }
     }
 
@@ -150,7 +152,7 @@
         color: #000;
 
         &:hover {
-          color: #1890ff
+          color: @baseColor;
         }
       }
 

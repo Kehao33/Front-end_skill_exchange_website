@@ -188,7 +188,7 @@ class Header extends Component {
           </div>
           {userObj && userObj.userRole === 'admin' ? (
             <div className="header-right-item">
-              <NavLink activeClassName="write-ative" to="/admin">
+              <NavLink activeClassName="write-ative" to="/admin/user">
                 <ClusterOutlined /> &nbsp;后台管理
               </NavLink>
             </div>

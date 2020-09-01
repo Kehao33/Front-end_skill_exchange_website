@@ -13,9 +13,9 @@ import Article from './pages/article/article.jsx'
 import UserCenter from './pages/userCenter/userCenter.jsx'
 import AdminUser from './pages/admin/adminUser/adminUser.jsx'
 import AdminArticle from './pages/admin/adminArticle/adminArticle.jsx'
-// import AdminEditArt from './pages/admin/adminEditArt/adminEditArt.jsx'
 import './pages/common/common.less'
 import './interceptors'
+// import AdminEditArt from './pages/admin/adminEditArt/adminEditArt.jsx'
 // import AdminUserInfo from './pages/admin/adminUserInfo/adminUserInfo.jsx'
 import UserWrite from './pages/userWrite/UserWrite.jsx'
 import Admin from './Admin.js'
@@ -42,7 +42,7 @@ class App extends Component {
     const isLogin = userObj ? 1 : 0
     return (
       <Router>
-        <div className="App">
+        <div className="app">
           <Header />
           <Switch>
             <Route path="/index" component={Home} />
@@ -69,6 +69,7 @@ class App extends Component {
             <Route
               path="/admin"
               render={() =>
+                // 后期可能会加入新的模块和功能
                 //   <Admin>
                 //     <Switch>
                 //       <Route path="/admin/user" component={AdminUser} />

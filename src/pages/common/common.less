@@ -23,21 +23,21 @@ h6 {
 a {
   text-decoration: none;
 }
-body {
-  min-width: 1000px;
-}
 
-@baseColor: '';
+
+
 
 .ant-input-affix-wrapper,
 .ant-btn-primary,
 .min-hgt,
-.ant-btn{
-min-height: 4vh;
+.ant-btn {
+  min-height: 4vh;
 }
-.ant-list-item-meta{
+
+.ant-list-item-meta {
   min-height: 2vh;
 }
+
 .ant-list-item {
   -ms-flex-align: initial;
   align-items: initial;
@@ -47,12 +47,30 @@ min-height: 4vh;
 
 
 
-.ant-tabs .ant-tabs-left-bar{
+.ant-tabs .ant-tabs-left-bar {
   min-width: 8vw;
 }
-
 
 
 .for-container {
   min-height: 2vh;
 }
+
+.app {
+  width: 100%;
+}
+
+
+
+body {
+  min-width: 750px;
+}
+
+html{font-size:10px}
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px){html{font-size:25px}}

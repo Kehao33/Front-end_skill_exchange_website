@@ -33,7 +33,7 @@ class UserWrite extends Component {
   async addImg($file) {
     const fileData = new FormData()
     fileData.append('file', $file)
-    console.log('执行了')
+    // console.log('执行了')
     const self = this
     $.ajax({
       url: '/user/pic-write',
@@ -42,6 +42,7 @@ class UserWrite extends Component {
       processData: false, //必须
       contentType: false, //必须
       success: function (data) {
+        // console.log('data.artUrl',data.artUrl)
         data.isOk && self.$vm.current.$img2Url($file.name, data.artUrl)
       },
       error: function (data) {
