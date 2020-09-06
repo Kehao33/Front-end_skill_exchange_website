@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Row, Col, BackTop } from 'antd'
+import { footerOptions } from './../../options/options.js'
+
 import './footer.less'
+
+const { recommend_Opt, commonTool_Opt, jobOffer_Opt, back_Opt } = footerOptions
 
 class Footer extends Component {
   constructor(props) {
@@ -35,42 +39,19 @@ class Footer extends Component {
                   <li>
                     <h3>推荐学习</h3>
                   </li>
-                  <li>
-                    <a
-                      href="https://cn.vuejs.org/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      VueJS
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://reactjs.org"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      ReactJS
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://juejin.im/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      掘金社区
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.runoob.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      菜鸟教程
-                    </a>
-                  </li>
+                  {recommend_Opt.map((item) => {
+                    return (
+                      <li key={item.href}>
+                        <a
+                          href={item.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    )
+                  })}
                 </ul>
               </Col>
               <Col span={4}>
@@ -78,42 +59,19 @@ class Footer extends Component {
                   <li>
                     <h3>常用工具</h3>
                   </li>
-                  <li>
-                    <a
-                      href="https://github.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      GitHub
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://ant.design/index-cn"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Ant Design
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://juejin.im/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      npmJS
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://stackoverflow.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      StackOverflow
-                    </a>
-                  </li>
+                  {commonTool_Opt.map((item) => {
+                    return (
+                      <li key={item.href}>
+                        <a
+                          href={item.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    )
+                  })}
                 </ul>
               </Col>
               <Col span={3}>
@@ -121,24 +79,20 @@ class Footer extends Component {
                   <li>
                     <h3>直击招聘</h3>
                   </li>
-                  <li>
-                    <a
-                      href="https://www.lagou.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      拉钩网
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.nowcoder.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      牛客网
-                    </a>
-                  </li>
+
+                  {jobOffer_Opt.map((item) => {
+                    return (
+                      <li key={item.href}>
+                        <a
+                          href={item.href}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    )
+                  })}
                 </ul>
               </Col>
               <Col span={4}>
@@ -146,33 +100,17 @@ class Footer extends Component {
                   <li>
                     <h3>基于NodeJS后台</h3>
                   </li>
-                  <li>
-                    <a
-                      href="https://www.expressjs.com.cn/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Express
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.koajs.com.cn/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Koa
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://eggjs.org/zh-cn/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      EggJS
-                    </a>
-                  </li>
+                  {back_Opt.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </Col>
             </Row>

@@ -1,6 +1,10 @@
 import React from 'react'
-import { Select } from 'antd'
-const { Option } = Select
+import {
+  Select
+} from 'antd'
+const {
+  Option
+} = Select
 
 const OPTIONS = [
   '前端动态',
@@ -27,12 +31,10 @@ const OPTIONS = [
   'ES6',
 ]
 
-const artClass_OPTIONS = [
-  {
+const artClass_OPTIONS = [{
     value: '前端动态',
     label: '前端动态',
-    children: [
-      {
+    children: [{
         value: 'html',
         label: 'html',
       },
@@ -118,8 +120,7 @@ const artClass_OPTIONS = [
   {
     value: '资源共享',
     label: '资源共享',
-    children: [
-      {
+    children: [{
         value: '视频教程',
         label: '视频教程',
       },
@@ -140,8 +141,7 @@ const artClass_OPTIONS = [
   {
     value: '数据结构&算法',
     label: '数据结构&算法',
-    children: [
-      {
+    children: [{
         value: '数据结构',
         label: '数据结构',
       },
@@ -159,11 +159,94 @@ const artClass_OPTIONS = [
 
 const optionsChilren = []
 for (let i = 0; i < OPTIONS.length; i++) {
-  optionsChilren.push(
-    <Option key={i} value={OPTIONS[i]}>
-      {OPTIONS[i]}
-    </Option>
+  optionsChilren.push( <
+    Option key = {
+      i
+    }
+    value = {
+      OPTIONS[i]
+    } > {
+      OPTIONS[i]
+    } <
+    /Option>
   )
 }
 
-export { OPTIONS, artClass_OPTIONS, optionsChilren }
+
+
+// footer的配置
+
+const footerOptions = {
+  // 推荐学习
+  recommend_Opt: [{
+      href: 'https://cn.vuejs.org/',
+      name: 'Vue.js'
+    },
+    {
+      href: 'https://reactjs.org',
+      name: 'React.js'
+    },
+    {
+      href: 'https://juejin.im/',
+      name: '掘金社区'
+    },
+    {
+      href: 'https://www.runoob.com/',
+      name: '菜鸟教程'
+    }
+  ],
+  // 常用工具
+  commonTool_Opt: [{
+      href: 'https://github.com/',
+      name: 'GitHub'
+    },
+    {
+      href: 'https://ant.design/index-cn',
+      name: 'Ant Design'
+    },
+    {
+      href: 'https://www.npmjs.com/',
+      name: 'npmJS'
+    },
+    {
+      href: 'https://stackoverflow.com/',
+      name: 'StackOverflow'
+    },
+  ],
+  // 直击招聘
+  jobOffer_Opt: [{
+      href: 'https://www.nowcoder.com/',
+      name: '牛客网'
+    },
+    {
+      href: 'https://www.lagou.com/',
+      name: '拉钩网'
+    },
+    {
+      href: 'https://landing.zhaopin.com/',
+      name: '智能招聘'
+    },
+  ],
+  // 基于NodeJS后台
+  back_Opt: [{
+      href: 'https://www.expressjs.com.cn/',
+      name: 'Express'
+    },
+    {
+      href: 'https://www.koajs.com.cn/',
+      name: 'Koa'
+    },
+    {
+      href: 'https://eggjs.org/zh-cn/',
+      name: 'EggJS'
+    },
+  ]
+}
+
+
+export {
+  OPTIONS,
+  artClass_OPTIONS,
+  optionsChilren,
+  footerOptions
+}
