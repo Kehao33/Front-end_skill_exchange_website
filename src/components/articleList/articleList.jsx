@@ -16,13 +16,12 @@ import Editor from 'for-editor'
 import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
 import './articleList.less'
 import { formatDate } from './../../tools.js'
-import { optionsChilren, artClass_OPTIONS } from './../../options/options.js'
+import { optionsChilren, artClass_OPTIONS, tagColor} from './../../options/options.js'
 const { Search } = Input
 
 function ArticleList(props) {
   let editorRef = createRef()
   const { listData, renderUser, userObj, modifyArt, deleteArt } = props
-  const tagColor = ['#f50', '#2db7f5', '#87d068', '#108ee9']
   const [renderData, setRenderData] = useState(listData)
   const [editorValue, setEditorValue] = useState('')
   const [isSearch, setIsSearch] = useState(false)
@@ -133,7 +132,7 @@ function ArticleList(props) {
                 {item &&
                   item.artTags.split(',').map((item, index) => (
                     <Tag
-                      color={tagColor[Math.floor(Math.random() * 10) % 4]}
+                      color={tagColor[Math.floor(Math.random() * 10) % tagColor.length]}
                       key={index}
                       style={{ margin: 4 }}
                     >

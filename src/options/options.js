@@ -159,17 +159,7 @@ const artClass_OPTIONS = [{
 
 const optionsChilren = []
 for (let i = 0; i < OPTIONS.length; i++) {
-  optionsChilren.push( <
-    Option key = {
-      i
-    }
-    value = {
-      OPTIONS[i]
-    } > {
-      OPTIONS[i]
-    } <
-    /Option>
-  )
+  optionsChilren.push( <Option key = {i} value = {OPTIONS[i]}> {OPTIONS[i]} </Option>)
 }
 
 
@@ -243,10 +233,12 @@ const footerOptions = {
   ]
 }
 
+const tagColor = ['#f50', '#2db7f5', '#87d068', '#108ee9']
 
 export {
   OPTIONS,
   artClass_OPTIONS,
   optionsChilren,
-  footerOptions
+  footerOptions,
+  tagColor
 }

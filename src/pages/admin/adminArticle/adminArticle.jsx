@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from 'react'
+import React, { useState, createRef, useEffect } from "react";
 import {
   Table,
   Button,
@@ -9,55 +9,58 @@ import {
   Input,
   Select,
   Cascader,
-} from 'antd'
-import { NavLink } from 'react-router-dom'
-import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
-import Editor from 'for-editor'
-import { optionsChilren, artClass_OPTIONS } from './../../../options/options.js'
+} from "antd";
+import { NavLink } from "react-router-dom";
+import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
+import Editor from "for-editor";
+import {
+  optionsChilren,
+  artClass_OPTIONS,
+} from "./../../../options/options.js";
 
-import '../adminTable.less'
+import "../adminTable.less";
 import {
   reqAllArt,
   reqDeleteArt,
   reqModifyArt,
-} from './../../../requestAPI/operHttp.js'
-import { formatDate } from './../../../tools.js'
+} from "./../../../requestAPI/operHttp.js";
+import { formatDate } from "./../../../tools.js";
 
 function Adminarticle(props) {
-  const [form] = Form.useForm()
-  let $vm = createRef()
-  const [visible, setVisible] = useState(false)
-  const [value, setValue] = useState('')
-  const [dataSource, setDataSource] = useState([])
+  const [form] = Form.useForm();
+  let $vm = createRef();
+  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState("");
+  const [dataSource, setDataSource] = useState([]);
   const columns = [
     {
-      title: '文章ID',
-      dataIndex: '_id',
-      align: 'center',
+      title: "文章ID",
+      dataIndex: "_id",
+      align: "center",
     },
     {
-      title: '标题',
-      dataIndex: 'title',
-      align: 'center',
+      title: "标题",
+      dataIndex: "title",
+      align: "center",
     },
     {
-      title: '作者',
-      dataIndex: 'authorName',
-      align: 'center',
+      title: "作者",
+      dataIndex: "authorName",
+      align: "center",
     },
     {
-      title: '发布时间',
-      dataIndex: 'publishDate',
-      align: 'center',
+      title: "发布时间",
+      dataIndex: "publishDate",
+      align: "center",
     },
     {
-      title: '文章操作',
-      dataIndex: 'operation',
+      title: "文章操作",
+      dataIndex: "operation",
       render: (text, record) =>
         dataSource.length >= 1 ? (
           <div className="operation-wrap">
             <span onClick={() => editArticle(record)}>
-              <FormOutlined style={{ color: '#58a', fontSize: 16 }} />
+              <FormOutlined style={{ color: "#58a", fontSize: 16 }} />
             </span>
             <Popconfirm
               cancelText="取消"
@@ -65,44 +68,44 @@ function Adminarticle(props) {
               title="确定永久删除吗?"
               onConfirm={() => handleDelete(record._id)}
             >
-              <DeleteOutlined style={{ color: '#f00', fontSize: 16 }} />
+              <DeleteOutlined style={{ color: "#f00", fontSize: 16 }} />
             </Popconfirm>
           </div>
         ) : null,
-      align: 'center',
+      align: "center",
     },
-  ]
+  ];
 
   function addImg($file) {
-    $vm.current.$img2Url($file.name, 'file_url')
-    console.log('$file: ', $file)
+    $vm.current.$img2Url($file.name, "file_url");
+    console.log("$file: ", $file);
   }
 
   // 展示对话框
   function showModal() {
-    setVisible(true)
+    setVisible(true);
   }
   // 处理for-editor富文本改变数据的函数
   function handleEditorChange(value) {
-    setValue(value)
+    setValue(value);
   }
 
   // 点击修改文章
   function handleOk() {
-    form.submit()
-    setVisible(false)
+    form.submit();
+    setVisible(false);
   }
   // 取消编辑
   function handleCancel() {
-    setVisible(false)
+    setVisible(false);
   }
 
   // 删除列表项
   async function handleDelete(deleteId) {
-    const { data } = await reqDeleteArt({ id: deleteId }, 'POST')
-    data.isOk && message.success(data.msg)
-    !data.isOk && message.error(data.msg)
-    getData()
+    const { data } = await reqDeleteArt({ id: deleteId }, "POST");
+    data.isOk && message.success(data.msg);
+    !data.isOk && message.error(data.msg);
+    getData();
   }
 
   function editArticle(record) {
@@ -112,41 +115,42 @@ function Adminarticle(props) {
       content: record.content,
       nickName: record.author.nickName,
       publishDate: record.publishDate,
-      artType: record.artType.split(','),
-      artTags: record.artTags.split(','),
-    })
-    showModal()
+      artType: record.artType.split(","),
+      artTags: record.artTags.split(","),
+    });
+    showModal();
   }
 
   //表单提交的时候触发，values为表单里的值对应的对象
   async function onFinish(formData) {
     // 修改文章的信息
-    const { data } = await reqModifyArt(formData, 'POST')
-    if (!data.isOk) message.error(data.msg)
+    const { data } = await reqModifyArt(formData, "POST");
+    if (!data.isOk) message.error(data.msg);
     else {
-      message.success(data.msg)
-      getData()
+      message.success(data.msg);
+      getData();
     }
   }
 
   async function getData() {
-    const { data } = await reqAllArt()
+    const { data } = await reqAllArt();
     if (data.isOk) {
       data.data.forEach((item) => {
-        item['key'] = item._id
-        item['authorName'] =
-          item.author.nickName + ' : ' + item.author.userEmail
-        item['publishDate'] = formatDate(item.publishDate)
-      })
-      setDataSource(data.data)
+        const { _id, author, publishDate } = item || {};
+        const { nickName, userEmail } = author || {};
+        item["key"] = _id;
+        item["authorName"] = nickName + " : " + userEmail;
+        item["publishDate"] = formatDate(publishDate);
+      });
+      setDataSource(data.data);
     } else {
-      message.error(data.msg)
+      message.error(data.msg);
     }
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const formLayout = {
     labelCol: {
@@ -155,7 +159,7 @@ function Adminarticle(props) {
     wrapperCol: {
       span: 22,
     },
-  }
+  };
 
   return (
     <div>
@@ -169,7 +173,7 @@ function Adminarticle(props) {
         <NavLink to="/user/write">新增文章</NavLink>
       </Button>
       <Table
-        rowClassName={() => 'editable-row'}
+        rowClassName={() => "editable-row"}
         bordered
         dataSource={dataSource}
         columns={columns}
@@ -198,7 +202,7 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '文章标题不可缺少',
+                message: "文章标题不可缺少",
               },
             ]}
           >
@@ -210,7 +214,7 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '发布时间不能改变',
+                message: "发布时间不能改变",
               },
             ]}
           >
@@ -222,7 +226,7 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '文章标题不可缺少',
+                message: "文章标题不可缺少",
               },
             ]}
           >
@@ -234,7 +238,7 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '文章标题不可缺少',
+                message: "文章标题不可缺少",
               },
             ]}
           >
@@ -246,8 +250,8 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '请选择文章类别',
-                type: 'array',
+                message: "请选择文章类别",
+                type: "array",
               },
             ]}
           >
@@ -264,15 +268,15 @@ function Adminarticle(props) {
               {
                 required: true,
                 max: 3,
-                message: '修改不能为空,且最多选择3个标签',
-                type: 'array',
+                message: "修改不能为空,且最多选择3个标签",
+                type: "array",
               },
             ]}
           >
             <Select
               mode="tags"
-              style={{ width: '100%' }}
-              tokenSeparators={[',']}
+              style={{ width: "100%" }}
+              tokenSeparators={[","]}
               allowClear
               showArrow={true}
               placeholder="请填写或者选择文章标签"
@@ -287,7 +291,7 @@ function Adminarticle(props) {
             rules={[
               {
                 required: true,
-                message: '文章标题不可缺少',
+                message: "文章标题不可缺少",
               },
             ]}
           >
@@ -304,7 +308,7 @@ function Adminarticle(props) {
         </Form>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default Adminarticle
+export default Adminarticle;

@@ -1,14 +1,14 @@
-import React, { Component, createRef } from 'react';
-import { Form, Input, Card, Button, Row, Col } from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
+import React, { Component, createRef } from "react";
+import { Form, Input, Card, Button, Row, Col } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
 // 获取register中的register方法
-import { Redirect } from 'react-router-dom';
-import { register } from '../../redux/user.redux.js';
-import { connect } from 'react-redux';
-import { reqGetCaptcha } from './../../requestAPI/operHttp';
-import Footer from './../../components/footer/footer.jsx';
-import { throttle } from './../../tools.js';
-import './register.less';
+import { Redirect } from "react-router-dom";
+import { register } from "../../redux/user.redux.js";
+import { connect } from "react-redux";
+import { reqGetCaptcha } from "./../../requestAPI/operHttp";
+import Footer from "./../../components/footer/footer.jsx";
+import { throttle } from "./../../tools.js";
+import "./register.less";
 
 @connect((state) => state.user, { register })
 class Register extends Component {
@@ -17,14 +17,14 @@ class Register extends Component {
     this.captchaRef = createRef();
     this.throttle_submit = this.throttle_submit.bind(this);
   }
-  
+
   throttle_submit = (formData) => {
     const { history, register, isAuth } = this.props;
     register(formData);
     if (isAuth) {
-      history.push('/login');
+      history.push("/login");
     }
-  }
+  };
 
   // 表单提交的时候自动触发的事件，values是表单内容对象
   onFinish = throttle(this.throttle_submit, 1000);
@@ -73,7 +73,7 @@ class Register extends Component {
       },
     };
     const { isAuth, redirectTo } = this.props;
-    if (isAuth && redirectTo === '/login') {
+    if (isAuth && redirectTo === "/login") {
       return <Redirect to="/login" />;
     }
 
@@ -99,7 +99,7 @@ class Register extends Component {
                 rules={[
                   {
                     required: true,
-                    message: '昵称不能为空且不能超过16个字符!',
+                    message: "昵称不能为空且不能超过16个字符!",
                     max: 16,
                     whitespace: true,
                   },
@@ -113,12 +113,12 @@ class Register extends Component {
                 label="邮箱账号"
                 rules={[
                   {
-                    type: 'email',
-                    message: '请输入正确的邮箱格式!',
+                    type: "email",
+                    message: "请输入正确的邮箱格式!",
                   },
                   {
                     required: true,
-                    message: '请输入您的邮箱号!',
+                    message: "请输入您的邮箱号!",
                   },
                 ]}
               >
@@ -131,54 +131,48 @@ class Register extends Component {
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的密码!',
+                    message: "请输入您的密码!",
                   },
                   {
-                    type: 'string',
+                    type: "string",
                     max: 18,
                     min: 6,
-                    message: '密码必须在6~18之间',
+                    message: "密码必须在6~18之间",
                   },
                 ]}
                 hasFeedback
               >
-                <Input.Password
-               
-                  placeholder="请填写登录密码"
-                />
+                <Input.Password placeholder="请填写登录密码" />
               </Form.Item>
 
               <Form.Item
                 name="confirmPwd"
                 label="确定密码"
-                dependencies={['userPwd']}
+                dependencies={["userPwd"]}
                 hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: '请核对您的密码!',
+                    message: "请核对您的密码!",
                   },
                   {
-                    type: 'string',
+                    type: "string",
                     max: 18,
                     min: 6,
-                    message: '密码必须在6~18之间',
+                    message: "密码必须在6~18之间",
                   },
                   ({ getFieldValue }) => ({
                     validator(rule, value) {
-                      if (!value || getFieldValue('userPwd') === value) {
+                      if (!value || getFieldValue("userPwd") === value) {
                         return Promise.resolve();
                       }
 
-                      return Promise.reject('请确保两次密码输入一致!');
+                      return Promise.reject("请确保两次密码输入一致!");
                     },
                   }),
                 ]}
               >
-                <Input.Password
-               
-                  placeholder="请再次确认登录密码"
-                />
+                <Input.Password placeholder="请再次确认登录密码" />
               </Form.Item>
 
               <Form.Item
@@ -186,7 +180,7 @@ class Register extends Component {
                 rules={[
                   {
                     required: true,
-                    message: '请核对您的密码!',
+                    message: "请核对您的密码!",
                   },
                 ]}
               >
@@ -197,7 +191,7 @@ class Register extends Component {
                       rules={[
                         {
                           required: true,
-                          message: '请输入正确的验证码!',
+                          message: "请输入正确的验证码!",
                         },
                       ]}
                     >
@@ -277,7 +271,7 @@ class Register extends Component {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  style={{ fontSize: '18px' }}
+                  style={{ fontSize: "18px" }}
                   size="large"
                 >
                   立即注册

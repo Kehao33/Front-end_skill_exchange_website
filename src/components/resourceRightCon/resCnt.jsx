@@ -1,50 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Avatar, Input, Button, Skeleton, message } from 'antd'
-import { CalendarOutlined } from '@ant-design/icons'
-import { formatDate } from './../../tools.js'
+import React, { useState, useEffect } from "react";
+import { Row, Col, Card, Avatar, Input, Button, Skeleton, message } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
+import { formatDate } from "./../../tools.js";
 
-import './resCnt.less'
-const { Search } = Input
+import "./resCnt.less";
+const { Search } = Input;
 function RightContent(props) {
-  const { resource_data, isContentLoading, rTitle } = props
-  const [isSearch, setIsSearch] = useState(false)
-  const [contentLoading, setContentLoading] = useState(isContentLoading)
-  const searchData = new Set()
-  const [renderData, setRenderData] = useState(resource_data)
+  const { resource_data, isContentLoading, rTitle } = props;
+  const [isSearch, setIsSearch] = useState(false);
+  const [contentLoading, setContentLoading] = useState(isContentLoading);
+  const searchData = new Set();
+  const [renderData, setRenderData] = useState(resource_data);
 
   useEffect(() => {
     if (resource_data.length !== 0) {
-      setContentLoading(false)
-      setRenderData(resource_data)
+      setContentLoading(false);
+      setRenderData(resource_data);
     }
-  }, [resource_data])
+  }, [resource_data]);
 
   function handleSearch(value) {
-    setIsSearch(true)
+    setIsSearch(true);
     if (value.trim().length === 0) {
-      setRenderData(resource_data)
-      message.warning('搜索数据不能为空')
+      setRenderData(resource_data);
+      message.warning("搜索数据不能为空");
     } else {
-      let regx = new RegExp(value, 'gi')
+      let regx = new RegExp(value, "gi");
       resource_data.forEach((item) => {
         for (let attr in item) {
           // 如果搜索框的所有内容在请求的数据中，那么就将该项数据添加到 searchData中
-          if (regx.test(item[attr] + '')) searchData.add(item)
+          if (regx.test(item[attr] + "")) searchData.add(item);
         }
-      })
+      });
       if (searchData.size !== 0) {
-        setRenderData([...searchData])
+        setRenderData([...searchData]);
         if (renderData.length !== 0) {
-          message.success('筛选成功')
+          message.success("筛选成功");
         }
       } else {
-        setRenderData(resource_data)
-        message.warning('资源不存在')
+        setRenderData(resource_data);
+        message.warning("资源不存在");
       }
     }
 
-    searchData.clear()
-    setIsSearch(false)
+    searchData.clear();
+    setIsSearch(false);
 
     // console.log('searchData,searchData: ', searchData)
   }
@@ -57,12 +57,14 @@ function RightContent(props) {
             <Row justify="start">
               <Col span={2}>
                 {item && item.author && item.author.avatarUrl ? (
-                  <Avatar src={item.author && item.author.avatarUrl} />
+                  <a href={`/user/${item?.author?._id}`}>
+                    <Avatar src={item.author && item.author.avatarUrl} />
+                  </a>
                 ) : (
                   <Avatar>U</Avatar>
                 )}
               </Col>
-              <Col span={12} style={{ textAlign: 'left', marginLeft: 24 }}>
+              <Col span={12} style={{ textAlign: "left", marginLeft: 24 }}>
                 <span className="share-detail">
                   <span className="share-username">
                     {item && item.author && item.author.nickName.substr(0, 20)}
@@ -75,7 +77,7 @@ function RightContent(props) {
               </Col>
               <Col span={6}>
                 <Button className="share-get">
-                  <a href={item && item.href}>点击获取</a>
+                  <a href={`/article/${item && item._id}`}>点击获取</a>
                 </Button>
               </Col>
             </Row>
@@ -84,14 +86,14 @@ function RightContent(props) {
             <h2 className="res-card-title">{item && item.title}</h2>
             <p className="res-content">
               {item &&
-                item.content.replace(/<[^>]+>/g, '').substr(0, 86) + '...'}
+                item.content.replace(/<[^>]+>/g, "").substr(0, 86) + "..."}
             </p>
           </div>
         </Card>
       ))
     ) : (
       <div>现在还没有数据</div>
-    )
+    );
 
   return (
     <div className="resource-right">
@@ -110,7 +112,7 @@ function RightContent(props) {
         </Skeleton>
       </div>
     </div>
-  )
+  );
 }
 
-export default RightContent
+export default RightContent;

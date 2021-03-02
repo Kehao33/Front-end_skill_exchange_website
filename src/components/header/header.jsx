@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { NavLink, withRouter, Link } from 'react-router-dom';
-import { Menu, Avatar, Dropdown, Modal, Form, Input } from 'antd';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { NavLink, withRouter, Link } from "react-router-dom";
+import { Menu, Avatar, Dropdown, Modal, Form, Input } from "antd";
+import { connect } from "react-redux";
 import {
   SoundOutlined,
   FolderOpenOutlined,
@@ -12,10 +12,12 @@ import {
   UserAddOutlined,
   ClusterOutlined,
   ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import { logOutUser, modifyUserPass } from './../../redux/user.redux.js';
+  BookOutlined,
+  GlobalOutlined
+} from "@ant-design/icons";
+import { logOutUser, modifyUserPass } from "./../../redux/user.redux.js";
 
-import './header.less';
+import "./header.less";
 const { confirm } = Modal;
 
 // connect将redux中的数据和操作函数相关联，让本组件可以通过this.props访问从redux中导入的方法或者是数据
@@ -34,7 +36,7 @@ class Header extends Component {
   // 用户修改基本信息提交操作调用
   onFinish(formData) {
     this.props.modifyUserPass(formData);
-    this.props.history.replace('/login');
+    this.props.history.replace("/login");
   }
 
   showModal = () => {
@@ -59,12 +61,12 @@ class Header extends Component {
   loginOut() {
     const self = this;
     confirm({
-      title: '是否确定退出登录?',
-      cancelText: '取消',
-      okText: '确定',
+      title: "是否确定退出登录?",
+      cancelText: "取消",
+      okText: "确定",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        self.props.history.push('/login');
+        self.props.history.push("/login");
         self.props.logOutUser();
       },
       onCancel() {},
@@ -107,6 +109,13 @@ class Header extends Component {
     );
     const headerRight = userObj ? (
       <div className="header-right">
+         {userObj && userObj.userRole === "admin" ? (
+            <div className="header-right-item">
+              <NavLink activeClassName="write-ative" to="/admin/user">
+                <ClusterOutlined /> &nbsp;后台管理
+              </NavLink>
+            </div>
+          ) : null}
         <div className="header-right-item">
           <NavLink activeClassName="active" to="/user/write">
             <BulbOutlined />
@@ -157,7 +166,7 @@ class Header extends Component {
     const head = flag ? null : (
       <div
         className="header"
-        style={pathNav === '/index' ? { position: 'absolute' } : null}
+        style={pathNav === "/index" ? { position: "absolute" } : null}
       >
         <div className="header-left">
           <div className="header-right-item">
@@ -186,13 +195,21 @@ class Header extends Component {
               数据结构&算法
             </NavLink>
           </div>
-          {userObj && userObj.userRole === 'admin' ? (
-            <div className="header-right-item">
-              <NavLink activeClassName="write-ative" to="/admin/user">
-                <ClusterOutlined /> &nbsp;后台管理
-              </NavLink>
-            </div>
-          ) : null}
+          <div className="header-right-item">
+          <BookOutlined />
+            &nbsp;
+            <NavLink activeClassName="active" to="/rss">
+              前端阅读
+            </NavLink>
+          </div>
+          <div className="header-right-item">
+          <GlobalOutlined />
+            &nbsp;
+            <NavLink activeClassName="active" to="/frontCircle">
+              前端圈
+            </NavLink>
+          </div>
+         
         </div>
         {headerRight}
 
@@ -223,12 +240,12 @@ class Header extends Component {
             }}
           >
             <Form.Item
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               name="userEmail"
               label="邮箱"
               rules={[
                 {
-                  type: 'email',
+                  type: "email",
                   required: true,
                 },
               ]}
@@ -243,7 +260,7 @@ class Header extends Component {
               rules={[
                 {
                   required: true,
-                  message: '请输入您的旧密码!',
+                  message: "请输入您的旧密码!",
                 },
               ]}
               hasFeedback
@@ -257,7 +274,7 @@ class Header extends Component {
               rules={[
                 {
                   required: true,
-                  message: '请输入您的新密码!',
+                  message: "请输入您的新密码!",
                 },
               ]}
               hasFeedback
@@ -269,20 +286,20 @@ class Header extends Component {
               name="confirmPwd"
               label="确定新密码"
               placeholder="请再次输入您的新密码"
-              dependencies={['userPwd']}
+              dependencies={["userPwd"]}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: '请核对您的密码!',
+                  message: "请核对您的密码!",
                 },
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
-                    if (!value || getFieldValue('userPwd') === value) {
+                    if (!value || getFieldValue("userPwd") === value) {
                       return Promise.resolve();
                     }
 
-                    return Promise.reject('请确保两次密码输入一致!');
+                    return Promise.reject("请确保两次密码输入一致!");
                   },
                 }),
               ]}

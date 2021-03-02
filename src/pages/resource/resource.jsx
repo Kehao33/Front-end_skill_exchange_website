@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col, Tabs } from 'antd';
-// import RightContent from './rightContent'
 import RightContent from './../../components/resourceRightCon/resCnt';
 import './resource.less';
 import Footer from './../../components/footer/footer.jsx';
@@ -27,22 +26,20 @@ class Resource extends Component {
   }
 
   async componentDidMount() {
-    const { data } = await reqResource();
-    data.data.forEach(
-      (item) => (item['href'] = '/article/' + item && item._id)
-    );
+    const { data:res } = await reqResource();
+    const {data} = res;
     this.setState({
-      allData: data.data,
-      videoData: data.data.filter(
+      allData: data,
+      videoData: data.filter(
         (item) => item.artType.search(/视频教程/g) !== -1
       ),
-      bookData: data.data.filter(
+      bookData: data.filter(
         (item) => item.artType.search(/电子书籍/g) !== -1
       ),
-      softData: data.data.filter(
+      softData: data.filter(
         (item) => item.artType.search(/好用软件/g) !== -1
       ),
-      otherData: data.data.filter(
+      otherData: data.filter(
         (item) => item.artType.search(/其他/g) !== -1
       ),
       isContentLoading: false,

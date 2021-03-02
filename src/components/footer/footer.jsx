@@ -30,7 +30,7 @@ class Footer extends Component {
                     <a href="/register">加入我们</a>
                   </li>
                   <li>
-                    <span>联系方式: 3121894148@qq.com</span>
+                    <span>联系方式: jakequc@163.com</span>
                   </li>
                 </ul>
               </Col>

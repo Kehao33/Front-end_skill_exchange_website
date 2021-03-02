@@ -13,12 +13,15 @@ import Article from './pages/article/article.jsx'
 import UserCenter from './pages/userCenter/userCenter.jsx'
 import AdminUser from './pages/admin/adminUser/adminUser.jsx'
 import AdminArticle from './pages/admin/adminArticle/adminArticle.jsx'
+import AdminComment from './pages/admin/adminComment/AdminComment'
 import './pages/common/common.less'
 import './interceptors'
 // import AdminEditArt from './pages/admin/adminEditArt/adminEditArt.jsx'
 // import AdminUserInfo from './pages/admin/adminUserInfo/adminUserInfo.jsx'
 import UserWrite from './pages/userWrite/UserWrite.jsx'
 import Admin from './Admin.js'
+import Rss from './pages/rss/Rss.jsx'
+import FrontCircle from './pages/frontCircle/FrontCircle.jsx'
 
 // // import Home from './pages/container/home'
 class App extends Component {
@@ -51,7 +54,8 @@ class App extends Component {
             <Route path="/register" component={Register} />
             <Route path="/resource" component={Resource} />
             <Route path="/algorithm" component={Algorithm} />
-
+            <Route path="/rss" component={Rss} />
+            <Route path="/frontCircle" component={FrontCircle} />
             <Route path="/article/:id" component={Article} />
             <Route
               path="/user"
@@ -84,6 +88,7 @@ class App extends Component {
                       <Route path="/admin/user" component={AdminUser} />
                       {/* <Route path="/admin/article/:aid" component={AdminEditArt} /> */}
                       <Route path="/admin/article" component={AdminArticle} />
+                      <Route path="/admin/comment" component={AdminComment} />
                     </Switch>
                   </Admin>
                 ) : (

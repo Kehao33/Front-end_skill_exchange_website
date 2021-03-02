@@ -10,6 +10,7 @@ import {
   Divider,
   Modal,
   Skeleton,
+  Tag,
 } from 'antd'
 import { connect } from 'react-redux'
 import {
@@ -26,6 +27,7 @@ import {
 } from './../../requestAPI/operHttp.js'
 import { formatDate } from './../../tools.js'
 import Footer from './../../components/footer/footer'
+import {tagColor} from './../../options/options'
 const { confirm } = Modal
 const Article = (props) => {
   // cntData: 文章对应的评论数据
@@ -138,6 +140,7 @@ const Article = (props) => {
                     {artData && artData.author.nickName}
                   </a>
                   <span> | {artData && formatDate(artData.publishDate)}</span>
+                  <span> |  {artData&&artData.artTags.split(',').map(item => <Tag key={item}>{item}</Tag>)}</span>
                 </div>
                 {/* 展示文章的阅读数，点赞，评论数量 */}
 

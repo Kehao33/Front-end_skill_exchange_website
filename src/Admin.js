@@ -13,6 +13,7 @@ import {
   FileOutlined,
   UserOutlined,
   DownOutlined,
+  CommentOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons'
 import { connect } from 'react-redux'
@@ -175,6 +176,20 @@ class Admin extends Component {
 
               <NavLink to="/admin/article" activeClassName="active">
                 <span className="nav-text">文章管理</span>
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item
+              key="3"
+              className={
+                location.pathname === '/admin/comment'
+                  ? 'ant-menu-item-selected'
+                  : ''
+              }
+            >
+             <CommentOutlined />
+
+              <NavLink to="/admin/comment" activeClassName="active">
+                <span className="nav-text">评论管理</span>
               </NavLink>
             </Menu.Item>
           </Menu>
